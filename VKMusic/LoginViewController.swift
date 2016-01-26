@@ -24,6 +24,22 @@ class LoginViewController: UIViewController, UIWebViewDelegate {
         super.init(coder: aDecoder)
     }
     
+    //MARK: - Lifecyle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        addCancelButtonItem()
+        showWebView()
+    }
+    
+    //MARK: - UIWebViewDelegate
+    
+    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        parseRequest(request)
+        return true
+    }
+    
+    
     //MARK: - Support
     
     private func showWebView() {
@@ -32,11 +48,11 @@ class LoginViewController: UIViewController, UIWebViewDelegate {
         view.addSubview(webView)
         
         let urlString = "https://oauth.vk.com/authorize?" +
-                        "client_id=5153671&display=mobile" +
-                        "&redirect_uri=http://vkmusic.player" +
-                        "&scope=audio" +
-                        "&response_type=token" +
-                        "&v=5.44&revoke=1"
+            "client_id=5153671&display=mobile" +
+            "&redirect_uri=http://vkmusic.player" +
+            "&scope=audio" +
+            "&response_type=token" +
+        "&v=5.44&revoke=1"
         let oauthURL = NSURL(string: urlString)
         let urlRequest = NSURLRequest(URL: oauthURL!)
         webView.loadRequest(urlRequest)
@@ -64,21 +80,6 @@ class LoginViewController: UIViewController, UIWebViewDelegate {
             }
             dismissViewControllerAnimated(true, completion: nil)
         }
-    }
-    
-    //MARK: - Lifecyle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        addCancelButtonItem()
-        showWebView()
-    }
-    
-    //MARK: - UIWebViewDelegate
-    
-    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        parseRequest(request)
-        return true
     }
     
     //MARL: - Actions

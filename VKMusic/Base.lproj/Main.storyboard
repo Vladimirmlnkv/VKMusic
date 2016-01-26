@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Root View Controller-->
@@ -14,13 +15,41 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="GAr-zW-XPn">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="GAr-zW-XPn" customClass="AudioCell" customModule="VKMusic" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GAr-zW-XPn" id="gsi-Jk-hza">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Evx-ys-ubK">
+                                            <rect key="frame" x="519" y="11" width="73" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="73" id="AMc-Ex-s1P"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OyK-Af-Ial">
+                                            <rect key="frame" x="8" y="11" width="503" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Evx-ys-ubK" firstAttribute="leading" secondItem="OyK-Af-Ial" secondAttribute="trailing" constant="8" symbolic="YES" id="5cm-39-Zl1"/>
+                                        <constraint firstItem="OyK-Af-Ial" firstAttribute="leading" secondItem="gsi-Jk-hza" secondAttribute="leadingMargin" id="8kn-RR-Tn6"/>
+                                        <constraint firstItem="Evx-ys-ubK" firstAttribute="baseline" secondItem="OyK-Af-Ial" secondAttribute="baseline" id="crw-pe-IOi"/>
+                                        <constraint firstItem="Evx-ys-ubK" firstAttribute="trailing" secondItem="gsi-Jk-hza" secondAttribute="trailingMargin" id="sGE-Cc-Pf5"/>
+                                        <constraint firstItem="OyK-Af-Ial" firstAttribute="centerY" secondItem="gsi-Jk-hza" secondAttribute="centerY" id="wtT-T3-j1V"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="durationLabel" destination="Evx-ys-ubK" id="d7d-Lt-hfo"/>
+                                    <outlet property="titleLabel" destination="OyK-Af-Ial" id="Wwa-Nz-daK"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
