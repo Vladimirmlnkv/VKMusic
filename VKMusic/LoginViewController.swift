@@ -52,7 +52,7 @@ class LoginViewController: UIViewController, UIWebViewDelegate {
             "&redirect_uri=http://vkmusic.player" +
             "&scope=audio" +
             "&response_type=token" +
-        "&v=5.44&revoke=1"
+            "&v=5.44"
         let oauthURL = NSURL(string: urlString)
         let urlRequest = NSURLRequest(URL: oauthURL!)
         webView.loadRequest(urlRequest)

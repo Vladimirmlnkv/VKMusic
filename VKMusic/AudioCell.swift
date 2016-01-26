@@ -12,13 +12,18 @@ class AudioCell: UITableViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+
+    func updateLabels(title title: String, artist: String, duration: Int) {
+        titleLabel.text? = "\(artist) - \(title)"
+        durationLabel.text? = durationString(duration)
     }
     
-    func updateLabels(title title: String, artist: String, duration: Int) {
-        titleLabel.text? = "\(artist) \(title)"
-        durationLabel.text? = "\(duration)"
+    func durationString(duration: Int) -> String {
+        let minutes = duration / 60
+        let seconds = duration - minutes * 60
+        if seconds < 10 {
+            return "\(minutes):0\(seconds)"
+        }
+        return "\(minutes):\(seconds)"
     }
 }
