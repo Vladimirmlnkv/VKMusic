@@ -47,6 +47,25 @@ class LoginViewController: UIViewController, UIWebViewDelegate {
         navigationItem.rightBarButtonItem = cancelButtonItem
     }
     
+    private func parseRequest(request: NSURLRequest) {
+        if request.URL?.host == "vkmusic.player" {
+            var accessToken: AccessToken?
+            let absString: String! = request.URL?.absoluteString
+            let count = "http://vkmusic.player/#".characters.count
+            let index = "http://vkmusic.player/#".startIndex.advancedBy(count)
+            let urlString = absString.substringFromIndex(index)
+            let components = urlString.componentsSeparatedByString("&")
+            let tmp = components[0].componentsSeparatedByString("=")[0]
+            if tmp == "access_token" {
+                accessToken = AccessToken(components: components)
+            }
+            if let comp = compelition {
+                comp(accessToken: accessToken)
+            }
+            dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
+    
     //MARK: - Lifecyle
     
     override func viewDidLoad() {
@@ -58,21 +77,7 @@ class LoginViewController: UIViewController, UIWebViewDelegate {
     //MARK: - UIWebViewDelegate
     
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        if request.URL?.host == "vkmusic.player" {
-            let absString: String! = request.URL?.absoluteString
-            let count = "http://vkmusic.player/#".characters.count
-            let index = "http://vkmusic.player/#".startIndex.advancedBy(count)
-            let urlString = absString.substringFromIndex(index)
-            let components = urlString.componentsSeparatedByString("&")
-            if components[0].componentsSeparatedByString("=")[0] == "access_token" {
-                let accessToken = AccessToken(components: components)
-                if let comp = compelition {
-                    comp(accessToken: accessToken)
-                    dismissViewControllerAnimated(true, completion: nil)
-                }
-            }
-
-        }
+        parseRequest(request)
         return true
     }
     
