@@ -10,12 +10,20 @@ import UIKit
 
 class MusicTableViewController: UITableViewController {
     
+    var audious = [Audio]()
+    
     //MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        RequestManager.sharedManager.authorizeUser()
-
+        RequestManager.sharedManager.authorizeUser { 
+            RequestManager.sharedManager.getAudios { serverData in
+                for data in serverData {
+                    let audio = Audio(serverData: data as! [String: AnyObject])
+                    self.audious.append(audio)
+                }
+            }
+        }
     }
     
     override func viewDidAppear(animated: Bool) {

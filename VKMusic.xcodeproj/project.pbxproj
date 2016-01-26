@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5967EDED50A93B8DE010DAB3 /* Pods_VKMusic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF98D414E6EF518EF329860 /* Pods_VKMusic.framework */; };
+		7E39F0691C57EE0B007B147E /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E39F0681C57EE0B007B147E /* Audio.swift */; };
 		7EE8012B1C56270A003FD687 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8012A1C56270A003FD687 /* AppDelegate.swift */; };
 		7EE801301C56270A003FD687 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EE8012E1C56270A003FD687 /* Main.storyboard */; };
 		7EE801321C56270A003FD687 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EE801311C56270A003FD687 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		415822C41FCCD3D79651FCB8 /* Pods-VKMusic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VKMusic.release.xcconfig"; path = "Pods/Target Support Files/Pods-VKMusic/Pods-VKMusic.release.xcconfig"; sourceTree = "<group>"; };
+		7E39F0681C57EE0B007B147E /* Audio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		7EE801271C56270A003FD687 /* VKMusic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VKMusic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EE8012A1C56270A003FD687 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7EE8012F1C56270A003FD687 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				7EE801441C565C9E003FD687 /* AccessToken.swift */,
+				7E39F0681C57EE0B007B147E /* Audio.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -244,6 +247,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E39F0691C57EE0B007B147E /* Audio.swift in Sources */,
 				7EE801401C562DCD003FD687 /* LoginViewController.swift in Sources */,
 				7EE801421C5633A4003FD687 /* MusicTableViewController.swift in Sources */,
 				7EE8012B1C56270A003FD687 /* AppDelegate.swift in Sources */,
