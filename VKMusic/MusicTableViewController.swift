@@ -66,9 +66,8 @@ class MusicTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)  {
         let audio = audios[indexPath.row]
-        let url = NSURL(string: audio.url)
-        if let u = url {
-            playAudioFromURL(u)
+        if let url = NSURL(string: audio.url) {
+            playAudioFromURL(url)
         }
     }
 
