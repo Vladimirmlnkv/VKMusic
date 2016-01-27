@@ -48,7 +48,8 @@ class LoginViewController: UIViewController, UIWebViewDelegate {
         view.addSubview(webView)
         
         let urlString = "https://oauth.vk.com/authorize?" +
-            "client_id=5153671&display=mobile" +
+            "client_id=5153671" +
+            "&display=mobile" +
             "&redirect_uri=http://vkmusic.player" +
             "&scope=audio" +
             "&response_type=token" +
@@ -59,7 +60,7 @@ class LoginViewController: UIViewController, UIWebViewDelegate {
     }
     
     private func addCancelButtonItem() {
-        let cancelButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: Selector("cancel"))
+        let cancelButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: Selector("cancelButtonPressed"))
         navigationItem.rightBarButtonItem = cancelButtonItem
     }
     
@@ -84,7 +85,7 @@ class LoginViewController: UIViewController, UIWebViewDelegate {
     
     //MARL: - Actions
     
-    @objc private func cancel() {
+    @objc private func cancelButtonPressed() {
         dismissViewControllerAnimated(true, completion: nil)
         if let comp = compelition {
             comp(accessToken: nil)
