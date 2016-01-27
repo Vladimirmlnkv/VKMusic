@@ -25,8 +25,9 @@ class ControlView: UIView {
     func updateInfo(titile title: String, artist: String, duration: Int) {
         titleLabel.text? = "\(artist) - \(title)"
         durationLabel.text? = durationString(duration)
-        currentDurationLabel.text? = "0"
+        currentDurationLabel.text? = "0:00"
         updatePlayButton(.Pause)
+        durationSlider.maximumValue = Float(duration)
     }
     
     func updatePlayButton(state: PlayButtonState) {
@@ -35,6 +36,11 @@ class ControlView: UIView {
         case .Play: playButton.setTitle("Pause", forState: .Normal)
         case .Pause: playButton.setTitle("Play", forState: .Normal)
         }
+    }
+    
+    func updateCurrentTime(time: Int64) {
+        currentDurationLabel.text? = durationString(Int(time))
+        durationSlider.value = Float(time)
     }
     
     func durationString(duration: Int) -> String {

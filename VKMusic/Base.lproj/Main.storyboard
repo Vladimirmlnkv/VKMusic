@@ -88,7 +88,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eq3-Si-Uah" customClass="ControlView" customModule="VKMusic" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="444" width="600" height="156"/>
                                 <subviews>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ZpE-vp-yER">
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ZpE-vp-yER">
                                         <rect key="frame" x="69" y="20" width="463" height="31"/>
                                     </slider>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KM1-K7-4C3">
@@ -168,9 +168,9 @@
                                     <constraint firstItem="6yT-Xo-UKQ" firstAttribute="leading" secondItem="Eq3-Si-Uah" secondAttribute="leading" constant="25" id="b1l-XV-C6g"/>
                                     <constraint firstAttribute="trailing" secondItem="hiY-Rp-AhD" secondAttribute="trailing" constant="24" id="em3-nC-5gH"/>
                                     <constraint firstItem="6yT-Xo-UKQ" firstAttribute="top" secondItem="hiY-Rp-AhD" secondAttribute="bottom" constant="8" id="j0v-f6-SGf"/>
+                                    <constraint firstItem="ZpE-vp-yER" firstAttribute="leading" secondItem="Eq3-Si-Uah" secondAttribute="leading" constant="71" id="kgo-vr-thB"/>
                                     <constraint firstAttribute="trailing" secondItem="ZMi-pV-naE" secondAttribute="trailing" constant="24" id="s86-SX-ace"/>
                                     <constraint firstItem="72H-mr-vcx" firstAttribute="leading" secondItem="Eq3-Si-Uah" secondAttribute="leading" constant="65" id="tcN-9s-ofx"/>
-                                    <constraint firstItem="ZpE-vp-yER" firstAttribute="leading" secondItem="KM1-K7-4C3" secondAttribute="trailing" constant="8" id="uQZ-Rt-ZVt"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="currentDurationLabel" destination="KM1-K7-4C3" id="jqv-rx-S5L"/>

@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-enum UpdateAction {
+private enum UpdateAction {
     case Play
     case Pause
     case Next
@@ -17,12 +17,15 @@ enum UpdateAction {
 }
 
 class MusicViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var controlView: ControlView!
     
     var audios = [Audio]()
-    var player: AVPlayer!
     var currentAudio: Audio!
+
+    var player: AVPlayer!
+    var timeObserber: AnyObject?
     
     //MARK: - Lifecycle
     
@@ -35,8 +38,11 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
         loadAudios()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        if let observer = timeObserber {
+            player.removeTimeObserver(observer)
+        }
     }
     
     //MARK: - Support
@@ -55,11 +61,19 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     //MARK: - Player Methods
     
-    func playAudioFromIndex(index: Int) {
+    private func playAudioFromIndex(index: Int) {
         currentAudio = audios[index]
         let playerItem = AVPlayerItem(URL: NSURL(string: currentAudio.url)!)
-        self.player = AVPlayer(playerItem: playerItem)
-        self.player.play()
+        player = AVPlayer(playerItem: playerItem)
+        player.play()
+
+        let interval = CMTime(seconds: 1, preferredTimescale: 1)
+        timeObserber = player.addPeriodicTimeObserverForInterval(interval, queue: dispatch_get_main_queue()) {
+            (time: CMTime) -> Void in
+            let currentTime  = Int64(time.value) / Int64(time.timescale)
+            self.controlView.updateCurrentTime(currentTime)
+        }
+        
         controlView.updateInfo(titile: currentAudio.title, artist: currentAudio.artist, duration: currentAudio.duration)
         controlView.updatePlayButton(.Play)
     }
@@ -68,7 +82,9 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
         switch action {
         case .Play:
             if player == nil {
-                playAudioFromIndex(0)
+                if audios.count > 0 {
+                    playAudioFromIndex(0)
+                }
             } else {
                 player.play()
                 controlView.updatePlayButton(.Play)
@@ -122,7 +138,6 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     //MARK: - Action
-    
 
     @IBAction func playAction(sender: UIButton) {
         if sender.titleLabel!.text! == "Play" {
