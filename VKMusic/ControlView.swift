@@ -32,8 +32,8 @@ class ControlView: UIView {
     func updatePlayButton(state: PlayButtonState) {
         playState = state
         switch state {
-        case .Play: playButton.setTitle("Play", forState: .Normal)
-        case .Pause: playButton.setTitle("Pause", forState: .Normal)
+        case .Play: playButton.setTitle("Pause", forState: .Normal)
+        case .Pause: playButton.setTitle("Play", forState: .Normal)
         }
     }
     

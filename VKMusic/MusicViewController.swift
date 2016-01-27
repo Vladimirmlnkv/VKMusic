@@ -22,6 +22,7 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     var audios = [Audio]()
     var player: AVPlayer!
+    var currentAudio: Audio!
     
     //MARK: - Lifecycle
     
@@ -54,16 +55,51 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     //MARK: - Player Methods
     
-    private func playAudioFromURL(url: NSURL) {
-        let playerItem = AVPlayerItem(URL: url)
+    func playAudioFromIndex(index: Int) {
+        currentAudio = audios[index]
+        let playerItem = AVPlayerItem(URL: NSURL(string: currentAudio.url)!)
         self.player = AVPlayer(playerItem: playerItem)
         self.player.play()
+        controlView.updateInfo(titile: currentAudio.title, artist: currentAudio.artist, duration: currentAudio.duration)
+        controlView.updatePlayButton(.Play)
     }
     
     private func updatePlayer(action: UpdateAction) {
-
+        switch action {
+        case .Play:
+            if player == nil {
+                playAudioFromIndex(0)
+            } else {
+                player.play()
+                controlView.updatePlayButton(.Play)
+            }
+        case .Pause:
+            player.pause()
+            controlView.updatePlayButton(.Pause)
+        case .Next:
+            if audios.count > 0 {
+                guard let audio = currentAudio else {
+                    playAudioFromIndex(0)
+                    return
+                }
+                let currentIndex = audios.indexOf(audio)!
+                if currentIndex + 1 <= audios.count - 1 {
+                    playAudioFromIndex(currentIndex + 1)
+                }
+            }
+        case .Last:
+            if audios.count > 0 {
+                guard let audio = currentAudio else {
+                    return
+                }
+                let currentIndex = audios.indexOf(audio)!
+                if currentIndex > 0 {
+                    playAudioFromIndex(currentIndex - 1)
+                }
+            }
+        }
     }
-    
+
     //MARK: - UITableViewDataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -81,34 +117,27 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
     //MARK: - UITableViewDelegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)  {
-        let audio = audios[indexPath.row]
-        if let url = NSURL(string: audio.url) {
-            playAudioFromURL(url)
-            controlView.updateInfo(titile: audio.title, artist: audio.artist, duration: audio.duration)
-        }
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        playAudioFromIndex(indexPath.row)
     }
     
     //MARK: - Action
     
 
     @IBAction func playAction(sender: UIButton) {
-        switch sender.titleLabel!.text! {
-        case "Play":
-            controlView.updatePlayButton(.Pause)
-            player.play()
-        case "Pause":
-            controlView.updatePlayButton(.Play)
-            player.pause()
-        default: return
+        if sender.titleLabel!.text! == "Play" {
+            updatePlayer(.Play)
+        } else {
+            updatePlayer(.Pause)
         }
     }
     
     @IBAction func nextAction(sender: AnyObject) {
-        
+        updatePlayer(.Next)
     }
     
     @IBAction func lastAction(sender: AnyObject) {
-        
+        updatePlayer(.Last)
     }
     
 }

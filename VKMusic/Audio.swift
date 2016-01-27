@@ -8,7 +8,11 @@
 
 import Foundation
 
-struct Audio {
+func ==(lhs: Audio, rhs: Audio) -> Bool {
+    return lhs.url == rhs.url
+}
+
+struct Audio: Equatable {
     
     let url: String
     let title: String
@@ -21,5 +25,4 @@ struct Audio {
         artist = "\(serverData["artist"]!)"
         duration = serverData["duration"] as! Int
     }
-    
 }
