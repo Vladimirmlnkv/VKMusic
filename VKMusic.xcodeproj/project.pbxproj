@@ -10,13 +10,14 @@
 		5967EDED50A93B8DE010DAB3 /* Pods_VKMusic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF98D414E6EF518EF329860 /* Pods_VKMusic.framework */; };
 		7E39F0691C57EE0B007B147E /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E39F0681C57EE0B007B147E /* Audio.swift */; };
 		7E39F06B1C57F3AA007B147E /* AudioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E39F06A1C57F3AA007B147E /* AudioCell.swift */; };
+		7E4617171C59139C005BE1F7 /* MusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4617161C59139C005BE1F7 /* MusicViewController.swift */; };
+		7E4617191C591A1A005BE1F7 /* ControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4617181C591A1A005BE1F7 /* ControlView.swift */; };
 		7EE8012B1C56270A003FD687 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8012A1C56270A003FD687 /* AppDelegate.swift */; };
 		7EE801301C56270A003FD687 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EE8012E1C56270A003FD687 /* Main.storyboard */; };
 		7EE801321C56270A003FD687 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EE801311C56270A003FD687 /* Assets.xcassets */; };
 		7EE801351C56270A003FD687 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EE801331C56270A003FD687 /* LaunchScreen.storyboard */; };
 		7EE8013E1C562BCC003FD687 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8013D1C562BCC003FD687 /* RequestManager.swift */; };
 		7EE801401C562DCD003FD687 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8013F1C562DCD003FD687 /* LoginViewController.swift */; };
-		7EE801421C5633A4003FD687 /* MusicTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE801411C5633A4003FD687 /* MusicTableViewController.swift */; };
 		7EE801451C565C9E003FD687 /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE801441C565C9E003FD687 /* AccessToken.swift */; };
 /* End PBXBuildFile section */
 
@@ -24,6 +25,8 @@
 		415822C41FCCD3D79651FCB8 /* Pods-VKMusic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VKMusic.release.xcconfig"; path = "Pods/Target Support Files/Pods-VKMusic/Pods-VKMusic.release.xcconfig"; sourceTree = "<group>"; };
 		7E39F0681C57EE0B007B147E /* Audio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		7E39F06A1C57F3AA007B147E /* AudioCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioCell.swift; sourceTree = "<group>"; };
+		7E4617161C59139C005BE1F7 /* MusicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
+		7E4617181C591A1A005BE1F7 /* ControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlView.swift; sourceTree = "<group>"; };
 		7EE801271C56270A003FD687 /* VKMusic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VKMusic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EE8012A1C56270A003FD687 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7EE8012F1C56270A003FD687 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -32,7 +35,6 @@
 		7EE801361C56270A003FD687 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7EE8013D1C562BCC003FD687 /* RequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
 		7EE8013F1C562DCD003FD687 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		7EE801411C5633A4003FD687 /* MusicTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicTableViewController.swift; sourceTree = "<group>"; };
 		7EE801441C565C9E003FD687 /* AccessToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
 		AEEE969E34DD39A7BB006B6A /* Pods-VKMusic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VKMusic.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VKMusic/Pods-VKMusic.debug.xcconfig"; sourceTree = "<group>"; };
 		AEF98D414E6EF518EF329860 /* Pods_VKMusic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VKMusic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,6 +77,14 @@
 			name = Cells;
 			sourceTree = "<group>";
 		};
+		7E46171A1C591A2D005BE1F7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7E4617181C591A1A005BE1F7 /* ControlView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		7EE8011E1C56270A003FD687 = {
 			isa = PBXGroup;
 			children = (
@@ -98,6 +108,7 @@
 			children = (
 				7EE8012A1C56270A003FD687 /* AppDelegate.swift */,
 				7EE8013D1C562BCC003FD687 /* RequestManager.swift */,
+				7E46171A1C591A2D005BE1F7 /* Views */,
 				7E39F06C1C57F3B0007B147E /* Cells */,
 				7EE801461C565CA6003FD687 /* Models */,
 				7EE801431C5633A9003FD687 /* Controllers */,
@@ -120,8 +131,8 @@
 		7EE801431C5633A9003FD687 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				7EE801411C5633A4003FD687 /* MusicTableViewController.swift */,
 				7EE8013F1C562DCD003FD687 /* LoginViewController.swift */,
+				7E4617161C59139C005BE1F7 /* MusicViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -258,10 +269,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E4617191C591A1A005BE1F7 /* ControlView.swift in Sources */,
 				7E39F0691C57EE0B007B147E /* Audio.swift in Sources */,
 				7EE801401C562DCD003FD687 /* LoginViewController.swift in Sources */,
-				7EE801421C5633A4003FD687 /* MusicTableViewController.swift in Sources */,
 				7EE8012B1C56270A003FD687 /* AppDelegate.swift in Sources */,
+				7E4617171C59139C005BE1F7 /* MusicViewController.swift in Sources */,
 				7E39F06B1C57F3AA007B147E /* AudioCell.swift in Sources */,
 				7EE8013E1C562BCC003FD687 /* RequestManager.swift in Sources */,
 				7EE801451C565C9E003FD687 /* AccessToken.swift in Sources */,

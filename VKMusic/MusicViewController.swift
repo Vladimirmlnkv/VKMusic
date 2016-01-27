@@ -1,15 +1,24 @@
 //
-//  MusicTableViewController.swift
+//  MusicViewController.swift
 //  VKMusic
 //
-//  Created by Владимир Мельников on 25.01.16.
+//  Created by Владимир Мельников on 27.01.16.
 //  Copyright © 2016 vlmlnkv. All rights reserved.
 //
 
 import UIKit
 import AVFoundation
 
-class MusicTableViewController: UITableViewController {
+enum UpdateAction {
+    case Play
+    case Pause
+    case Next
+    case Last
+}
+
+class MusicViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var controlView: ControlView!
     
     var audios = [Audio]()
     var player: AVPlayer!
@@ -18,6 +27,9 @@ class MusicTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         navigationItem.title! = "Music"
         loadAudios()
     }
@@ -48,13 +60,17 @@ class MusicTableViewController: UITableViewController {
         self.player.play()
     }
     
+    private func updatePlayer(action: UpdateAction) {
+
+    }
+    
     //MARK: - UITableViewDataSource
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return audios.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! AudioCell
         let audio = audios[indexPath.row]
         cell.updateLabels(title: audio.title, artist: audio.artist, duration: audio.duration)
@@ -64,11 +80,35 @@ class MusicTableViewController: UITableViewController {
     
     //MARK: - UITableViewDelegate
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)  {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)  {
         let audio = audios[indexPath.row]
         if let url = NSURL(string: audio.url) {
             playAudioFromURL(url)
+            controlView.updateInfo(titile: audio.title, artist: audio.artist, duration: audio.duration)
         }
     }
+    
+    //MARK: - Action
+    
 
+    @IBAction func playAction(sender: UIButton) {
+        switch sender.titleLabel!.text! {
+        case "Play":
+            controlView.updatePlayButton(.Pause)
+            player.play()
+        case "Pause":
+            controlView.updatePlayButton(.Play)
+            player.pause()
+        default: return
+        }
+    }
+    
+    @IBAction func nextAction(sender: AnyObject) {
+        
+    }
+    
+    @IBAction func lastAction(sender: AnyObject) {
+        
+    }
+    
 }
