@@ -21,13 +21,12 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var controlView: ControlView!
 
-    let searchController = UISearchController(searchResultsController: nil)
+    private let searchController = UISearchController(searchResultsController: nil)
     
-    var allAudios = [Audio]()
-    var filteredAudios = [Audio]()
-    var currentAudio: Audio!
-    
-    var audios: [Audio] {
+    private var allAudios = [Audio]()
+    private var filteredAudios = [Audio]()
+    private var currentAudio: Audio!
+    private var audios: [Audio] {
         get {
             if searchController.active && searchController.searchBar.text != "" {
                 return filteredAudios
@@ -37,8 +36,8 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
 
-    var player: AVPlayer!
-    var timeObserber: AnyObject?
+    private var player: AVPlayer!
+    private var timeObserber: AnyObject?
     
     //MARK: - Lifecycle
     
@@ -49,7 +48,7 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
         tableView.dataSource = self
         navigationItem.title! = "Music"
         
-        generateSearchController() 
+        generateSearchController()
         loadAudios()
     }
     
