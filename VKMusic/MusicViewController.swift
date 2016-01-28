@@ -66,6 +66,9 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
             (time: CMTime) -> Void in
             let currentTime  = Int64(time.value) / Int64(time.timescale)
             self.controlView.updateCurrentTime(currentTime)
+            if currentTime == Int64(self.currentAudio.duration) {
+                self.updatePlayer(.Next)
+            }
         }
     }
     
@@ -76,6 +79,7 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     private func playAudioFromIndex(index: Int) {
+        killTimeObserver()
         currentAudio = audios[index]
         let playerItem = AVPlayerItem(URL: NSURL(string: currentAudio.url)!)
         player = AVPlayer(playerItem: playerItem)
@@ -144,7 +148,7 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
         playAudioFromIndex(indexPath.row)
     }
     
-    //MARK: - Action
+    //MARK: - Actions
 
     @IBAction func playAction(sender: UIButton) {
         if sender.titleLabel!.text! == "Play" {

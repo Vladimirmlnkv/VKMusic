@@ -27,6 +27,7 @@ class ControlView: UIView {
         durationLabel.text? = durationString(duration)
         currentDurationLabel.text? = "0:00"
         updatePlayButton(.Pause)
+        durationSlider.value = 0
         durationSlider.maximumValue = Float(duration)
     }
     
