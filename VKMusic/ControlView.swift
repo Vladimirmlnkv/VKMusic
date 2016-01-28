@@ -19,9 +19,7 @@ class ControlView: UIView {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var durationSlider: UISlider!
     @IBOutlet weak var playButton: UIButton!
-    
-    var playState = PlayButtonState.Play
-    
+        
     func updateInfo(titile title: String, artist: String, duration: Int) {
         titleLabel.text? = "\(artist) - \(title)"
         durationLabel.text? = durationString(duration)
@@ -32,7 +30,6 @@ class ControlView: UIView {
     }
     
     func updatePlayButton(state: PlayButtonState) {
-        playState = state
         switch state {
         case .Play: playButton.setTitle("Pause", forState: .Normal)
         case .Pause: playButton.setTitle("Play", forState: .Normal)
