@@ -16,14 +16,26 @@ private enum UpdateAction {
     case Last
 }
 
-class MusicViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MusicViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var controlView: ControlView!
 
+    let searchController = UISearchController(searchResultsController: nil)
     
-    var audios = [Audio]()
+    var allAudios = [Audio]()
+    var filteredAudios = [Audio]()
     var currentAudio: Audio!
+    
+    var audios: [Audio] {
+        get {
+            if searchController.active && searchController.searchBar.text != "" {
+                return filteredAudios
+            } else {
+                return allAudios
+            }
+        }
+    }
 
     var player: AVPlayer!
     var timeObserber: AnyObject?
@@ -32,10 +44,12 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         navigationItem.title! = "Music"
+        
+        generateSearchController() 
         loadAudios()
     }
     
@@ -46,12 +60,26 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     //MARK: - Support
     
+    private func filterAudiosForSearchText(searchText: String) {
+        filteredAudios = allAudios.filter{ audio in
+            return audio.title.containsString(searchText) || audio.artist.containsString(searchText)
+        }
+        tableView.reloadData()
+    }
+    
+    private func generateSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        definesPresentationContext = true
+        tableView.tableHeaderView = searchController.searchBar
+    }
+    
     private func loadAudios() {
         RequestManager.sharedManager.authorizeUser {
             RequestManager.sharedManager.getAudios { serverData in
                 for data in serverData {
                     let audio = Audio(serverData: data as! [String: AnyObject])
-                    self.audios.append(audio)
+                    self.allAudios.append(audio)
                     self.tableView.reloadData()
                 }
             }
@@ -146,6 +174,12 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)  {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         playAudioFromIndex(indexPath.row)
+    }
+    
+    //MARK: - UISearchResultsUpdating
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        filterAudiosForSearchText(searchController.searchBar.text!)
     }
     
     //MARK: - Actions
