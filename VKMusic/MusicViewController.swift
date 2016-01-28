@@ -136,9 +136,10 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
                     playAudioFromIndex(0)
                     return
                 }
-                let currentIndex = audios.indexOf(audio)!
-                if currentIndex + 1 <= audios.count - 1 {
-                    playAudioFromIndex(currentIndex + 1)
+                if let currentIndex = audios.indexOf(audio) {
+                    if currentIndex + 1 <= audios.count - 1 {
+                        playAudioFromIndex(currentIndex + 1)
+                    }
                 }
             }
         case .Last:
@@ -146,9 +147,10 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
                 guard let audio = currentAudio else {
                     return
                 }
-                let currentIndex = audios.indexOf(audio)!
-                if currentIndex > 0 {
-                    playAudioFromIndex(currentIndex - 1)
+                if let currentIndex = audios.indexOf(audio) {
+                    if currentIndex > 0 {
+                        playAudioFromIndex(currentIndex - 1)
+                    }
                 }
             }
         }
