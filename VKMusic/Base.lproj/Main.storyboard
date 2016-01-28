@@ -90,6 +90,10 @@
                                 <subviews>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ZpE-vp-yER">
                                         <rect key="frame" x="69" y="20" width="463" height="31"/>
+                                        <connections>
+                                            <action selector="remoteAction:" destination="XuN-XS-zrm" eventType="valueChanged" id="k0p-aX-M1x"/>
+                                            <action selector="remoteEnded:" destination="XuN-XS-zrm" eventType="touchUpInside" id="FSM-sy-kK2"/>
+                                        </connections>
                                     </slider>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KM1-K7-4C3">
                                         <rect key="frame" x="25" y="26" width="38" height="18"/>

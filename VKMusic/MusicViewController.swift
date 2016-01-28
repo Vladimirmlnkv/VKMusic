@@ -20,6 +20,7 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var controlView: ControlView!
+
     
     var audios = [Audio]()
     var currentAudio: Audio!
@@ -40,9 +41,7 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        if let observer = timeObserber {
-            player.removeTimeObserver(observer)
-        }
+        killTimeObserver()
     }
     
     //MARK: - Support
@@ -61,19 +60,27 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     //MARK: - Player Methods
     
-    private func playAudioFromIndex(index: Int) {
-        currentAudio = audios[index]
-        let playerItem = AVPlayerItem(URL: NSURL(string: currentAudio.url)!)
-        player = AVPlayer(playerItem: playerItem)
-        player.play()
-
+    private func addTimeObeserver() {
         let interval = CMTime(seconds: 1, preferredTimescale: 1)
         timeObserber = player.addPeriodicTimeObserverForInterval(interval, queue: dispatch_get_main_queue()) {
             (time: CMTime) -> Void in
             let currentTime  = Int64(time.value) / Int64(time.timescale)
             self.controlView.updateCurrentTime(currentTime)
         }
-        
+    }
+    
+    private func killTimeObserver() {
+        if let observer = timeObserber {
+            player.removeTimeObserver(observer)
+        }
+    }
+    
+    private func playAudioFromIndex(index: Int) {
+        currentAudio = audios[index]
+        let playerItem = AVPlayerItem(URL: NSURL(string: currentAudio.url)!)
+        player = AVPlayer(playerItem: playerItem)
+        player.play()
+        addTimeObeserver()
         controlView.updateInfo(titile: currentAudio.title, artist: currentAudio.artist, duration: currentAudio.duration)
         controlView.updatePlayButton(.Play)
     }
@@ -155,4 +162,15 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
         updatePlayer(.Last)
     }
     
+    @IBAction func remoteAction(sender: UISlider) {
+        updatePlayer(.Pause)
+        let value = sender.value
+        let time = CMTime(value: Int64(value), timescale: 1)
+        controlView.updateCurrentTime(Int64(value))
+        player.seekToTime(time)
+    }
+    
+    @IBAction func remoteEnded(sender: AnyObject) {
+        updatePlayer(.Play)
+    }
 }
