@@ -61,7 +61,13 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     private func filterAudiosForSearchText(searchText: String) {
         filteredAudios = allAudios.filter{ audio in
-            return audio.title.containsString(searchText) || audio.artist.containsString(searchText)
+            let searchWords = searchText.componentsSeparatedByString(" ")
+            for word in searchWords {
+                if !(audio.title.lowercaseString.containsString(word.lowercaseString) || audio.artist.lowercaseString.containsString(word.lowercaseString)) && word != "" {
+                    return false
+                }
+            }
+            return true
         }
         tableView.reloadData()
     }
