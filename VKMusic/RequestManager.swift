@@ -13,7 +13,7 @@ class RequestManager {
     static let sharedManager = RequestManager()
     var accessToken: AccessToken?
     
-    //MARK: - Requests
+    //MARK: - VK Methods
     
     func authorizeUser(success: (Void) -> Void) {
         let loginVC = LoginViewController { (accessToken) -> Void in
@@ -39,6 +39,23 @@ class RequestManager {
                         let data = Array(serverData[1..<serverData.count])
                         success(serverData: data)
                     }
+        }
+    }
+    
+    //MARK: - Requests
+    
+    private func getDataFromUrl(url:NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
+        NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
+            completion(data: data, response: response, error: error)
+            }.resume()
+    }
+    
+    func downloadImage(url: NSURL, compeletion: (image: UIImage) -> Void) {
+        getDataFromUrl(url) { (data, response, error)  in
+            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                guard let data = data where error == nil else { return }
+                compeletion(image: UIImage(data: data)!)
+            }
         }
     }
 }
