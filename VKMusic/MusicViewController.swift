@@ -48,6 +48,7 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
         tableView.dataSource = self
         navigationItem.title! = "Music"
         
+        setAudioSeccion()
         generateSearchController()
         loadAudios()
     }
@@ -58,6 +59,17 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     //MARK: - Support
+    
+    private func setAudioSeccion() {
+        let audioSeccion = AVAudioSession.sharedInstance()
+        do {
+            try audioSeccion.setCategory("AVAudioSessionCategoryPlayback")
+            try audioSeccion.setActive(true)
+            UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
+        } catch {
+            print("ERROR")
+        }
+    }
     
     private func filterAudiosForSearchText(searchText: String) {
         filteredAudios = allAudios.filter{ audio in
