@@ -18,7 +18,7 @@ class AudioCell: UITableViewCell {
         durationLabel.text? = durationString(duration)
     }
     
-    func durationString(duration: Int) -> String {
+    private func durationString(duration: Int) -> String {
         let minutes = duration / 60
         let seconds = duration - minutes * 60
         if seconds < 10 {

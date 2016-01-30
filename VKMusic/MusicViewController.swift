@@ -56,6 +56,7 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         killTimeObserver()
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: AVAudioSessionRouteChangeNotification, object: nil)
     }
     
     //MARK: - Support
@@ -69,6 +70,7 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
         } catch {
             print("ERROR")
         }
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("handleAudioSessionRouteChangeNotification:"), name: AVAudioSessionRouteChangeNotification, object: nil)
     }
     
     private func filterAudiosForSearchText(searchText: String) {
@@ -98,6 +100,18 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
                     let audio = Audio(serverData: data as! [String: AnyObject])
                     self.allAudios.append(audio)
                     self.tableView.reloadData()
+                }
+            }
+        }
+    }
+    
+    //MARK: - Notifications
+    
+    @objc private func handleAudioSessionRouteChangeNotification(notification: NSNotification) {
+        if let info = notification.userInfo as? Dictionary<String,AnyObject> {
+            if let s = info["AVAudioSessionRouteChangeReasonKey"] {
+                if s as! NSObject == 2 {
+                    updatePlayer(.Pause)
                 }
             }
         }
@@ -146,8 +160,10 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
                 controlView.updatePlayButton(.Play)
             }
         case .Pause:
-            player.pause()
-            controlView.updatePlayButton(.Pause)
+            if player != nil {
+                player.pause()
+                controlView.updatePlayButton(.Pause)
+            }
         case .Next:
             if audios.count > 0 {
                 guard let audio = currentAudio else {
