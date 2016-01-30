@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import MediaPlayer
 
 private enum UpdateAction {
     case Play
@@ -23,31 +24,42 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     private let searchController = UISearchController(searchResultsController: nil)
     
+    private var currentSection = 0
+    
     private var allAudios = [Audio]()
     private var filteredAudios = [Audio]()
-    private var currentAudio: Audio!
+    private var searchAudious = [Audio]()
     private var audios: [Audio] {
         get {
-            if searchController.active && searchController.searchBar.text != "" {
-                return filteredAudios
+            if currentSection == 0 {
+                if searchController.active && searchController.searchBar.text != "" {
+                    return filteredAudios
+                } else {
+                    return allAudios
+                }
             } else {
-                return allAudios
+                return searchAudious
             }
         }
     }
+    private var currentAudio: Audio!
 
     private var player: AVPlayer!
     private var timeObserber: AnyObject?
+    
+    private let commandCenter = MPRemoteCommandCenter.sharedCommandCenter()
     
     //MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("handleAudioSessionRouteChangeNotification:"), name: AVAudioSessionRouteChangeNotification, object: nil)
+
         tableView.delegate = self
         tableView.dataSource = self
         navigationItem.title! = "Music"
         
+        setCommandCenter()
         setAudioSeccion()
         generateSearchController()
         loadAudios()
@@ -59,6 +71,37 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
         NSNotificationCenter.defaultCenter().removeObserver(self, name: AVAudioSessionRouteChangeNotification, object: nil)
     }
     
+    //MARK: - RemoteCommandCenter
+    
+    private func setCommandCenter() {
+        commandCenter.pauseCommand.addTarget(self, action: Selector("remoteCommandPause"))
+        commandCenter.playCommand.addTarget(self, action: Selector("remoteCommandPlay"))
+        commandCenter.nextTrackCommand.addTarget(self, action: Selector("remoteCommandNext"))
+        commandCenter.previousTrackCommand.addTarget(self, action: Selector("remoteCommandPrevious"))
+    }
+    
+    private func setNowPlayingInfo() {
+        MPNowPlayingInfoCenter.defaultCenter().nowPlayingInfo = [MPMediaItemPropertyTitle: currentAudio.title,
+                                                                    MPMediaItemPropertyArtist: currentAudio.artist,
+                                                                    MPNowPlayingInfoPropertyPlaybackRate: 1.0]
+    }
+    
+    @objc private func remoteCommandPause() {
+        updatePlayer(.Pause)
+    }
+    
+    @objc private func remoteCommandPlay() {
+        updatePlayer(.Play)
+    }
+    
+    @objc private func remoteCommandNext() {
+        updatePlayer(.Next)
+    }
+    
+    @objc private func remoteCommandPrevious() {
+        updatePlayer(.Last)
+    }
+    
     //MARK: - Support
     
     private func setAudioSeccion() {
@@ -66,11 +109,9 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
         do {
             try audioSeccion.setCategory("AVAudioSessionCategoryPlayback")
             try audioSeccion.setActive(true)
-            UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
         } catch {
             print("ERROR")
         }
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("handleAudioSessionRouteChangeNotification:"), name: AVAudioSessionRouteChangeNotification, object: nil)
     }
     
     private func filterAudiosForSearchText(searchText: String) {
@@ -140,6 +181,7 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
     private func playAudioFromIndex(index: Int) {
         killTimeObserver()
         currentAudio = audios[index]
+        setNowPlayingInfo()
         let playerItem = AVPlayerItem(URL: NSURL(string: currentAudio.url)!)
         player = AVPlayer(playerItem: playerItem)
         player.play()
@@ -192,7 +234,18 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     //MARK: - UITableViewDataSource
     
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        if searchAudious.count > 0 {
+            return 2
+        } else {
+            return 1
+        }
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 1 {
+            return searchAudious.count
+        }
         return audios.count
     }
     
@@ -204,9 +257,17 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
         return cell
     }
     
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 1 {
+            return "Search results"
+        }
+        return nil
+    }
+    
     //MARK: - UITableViewDelegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)  {
+        currentSection = indexPath.section
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         playAudioFromIndex(indexPath.row)
     }
