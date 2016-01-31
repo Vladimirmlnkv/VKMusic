@@ -42,6 +42,24 @@ class RequestManager {
         }
     }
     
+    func searchAudios(searchText searchText: String, offset: Int, count: Int, success: (serverData: [AnyObject]) -> Void) {
+        let parameters = [
+            "q" : searchText,
+            "auto_complete" : 1,
+            "sort" : 2,
+            "offset" : offset,
+            "count" : count,
+            "access_token" : accessToken!.token]
+        
+        Alamofire.request(.GET, "https://api.vk.com/method/audio.search", parameters: parameters as? [String : AnyObject])
+                 .responseJSON { response in
+                    if let serverData = response.result.value!["response"]! as? [AnyObject]{
+                        let data = Array(serverData[1..<serverData.count])
+                        success(serverData: data)
+                    }
+        }
+    }
+    
     //MARK: - Requests
     
     private func getDataFromUrl(url:NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {

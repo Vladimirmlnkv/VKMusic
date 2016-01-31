@@ -17,7 +17,7 @@ private enum UpdateAction {
     case Last
 }
 
-class MusicViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating {
+class MusicViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var controlView: ControlView!
@@ -119,6 +119,7 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
         searchController.dimsBackgroundDuringPresentation = false
         definesPresentationContext = true
         tableView.tableHeaderView = searchController.searchBar
+        searchController.searchBar.delegate = self
     }
     
     private func loadAudios() {
@@ -231,16 +232,24 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 1 {
-            return searchAudious.count
+            return searchAudious.count - 1
         }
-        return audios.count
+        return audios.count - 1
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! AudioCell
-        let audio = audios[indexPath.row]
+        var audio: Audio
+        if indexPath.section == 0 {
+            audio = audios[indexPath.row]
+        } else {
+            audio = searchAudious[indexPath.row]
+            if indexPath.row >= searchAudious.count - 5 {
+                searchForAudios()
+            }
+        }
         cell.updateLabels(title: audio.title, artist: audio.artist, duration: audio.duration)
-        
+    
         return cell
     }
     
@@ -275,10 +284,37 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
         tableView.reloadData()
     }
     
+    private func searchForAudios() {
+        if searchController.active && searchController.searchBar.text != "" {
+            RequestManager.sharedManager.searchAudios(searchText: searchController.searchBar.text!, offset: searchAudious.count, count: 30) { (serverData) -> Void in
+                for data in serverData {
+                    let audio = Audio(serverData: data as! [String: AnyObject])
+                    self.searchAudious.append(audio)
+                    self.tableView.reloadData()
+                }
+            }
+        } else {
+            searchAudious = [Audio]()
+            tableView.reloadData()
+        }
+    }
+    
     //MARK: - UISearchResultsUpdating
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         filterAudiosForSearchText(searchController.searchBar.text!)
+    }
+    
+    //MARK: - UISearchBarDelegate
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchForAudios()
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchAudious = [Audio]()
+        currentSection = 0
+        tableView.reloadData()
     }
     
     //MARK: - Actions
