@@ -85,7 +85,7 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
                                                                     MPMediaItemPropertyArtist: currentAudio.artist,
                                                                     MPNowPlayingInfoPropertyPlaybackRate: 1.0]
     }
-    
+
     @objc private func remoteCommandPause() {
         updatePlayer(.Pause)
     }
@@ -112,19 +112,6 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
         } catch {
             print("ERROR")
         }
-    }
-    
-    private func filterAudiosForSearchText(searchText: String) {
-        filteredAudios = allAudios.filter{ audio in
-            let searchWords = searchText.componentsSeparatedByString(" ")
-            for word in searchWords {
-                if !(audio.title.lowercaseString.containsString(word.lowercaseString) || audio.artist.lowercaseString.containsString(word.lowercaseString)) && word != "" {
-                    return false
-                }
-            }
-            return true
-        }
-        tableView.reloadData()
     }
     
     private func generateSearchController() {
@@ -272,6 +259,22 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
         playAudioFromIndex(indexPath.row)
     }
     
+    
+    //MARK: - Search Methods
+    
+    private func filterAudiosForSearchText(searchText: String) {
+        filteredAudios = allAudios.filter{ audio in
+            let searchWords = searchText.componentsSeparatedByString(" ")
+            for word in searchWords {
+                if !(audio.title.lowercaseString.containsString(word.lowercaseString) || audio.artist.lowercaseString.containsString(word.lowercaseString)) && word != "" {
+                    return false
+                }
+            }
+            return true
+        }
+        tableView.reloadData()
+    }
+    
     //MARK: - UISearchResultsUpdating
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
@@ -298,10 +301,12 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     @IBAction func remoteAction(sender: UISlider) {
         updatePlayer(.Pause)
-        let value = sender.value
-        let time = CMTime(value: Int64(value), timescale: 1)
-        controlView.updateCurrentTime(Int64(value))
-        player.seekToTime(time)
+        if player != nil {
+            let value = sender.value
+            let time = CMTime(value: Int64(value), timescale: 1)
+            controlView.updateCurrentTime(Int64(value))
+            player.seekToTime(time)
+        }
     }
     
     @IBAction func remoteEnded(sender: AnyObject) {
