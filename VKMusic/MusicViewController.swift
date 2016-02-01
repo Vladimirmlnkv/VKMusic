@@ -165,7 +165,9 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     private func killPlayer() {
-        player.replaceCurrentItemWithPlayerItem(nil)
+        if player != nil {
+            player.replaceCurrentItemWithPlayerItem(nil)
+        }
     }
     
     private func playAudioFromIndex(index: Int) {
