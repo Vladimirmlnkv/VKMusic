@@ -22,6 +22,14 @@ class LoginManager {
     func logout() {
         RequestManager.sharedManager.removeToken()
         showLoginScreen()
+        
+        let cookies = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+        let vkCookies = cookies.cookiesForURL(NSURL(string: "https://oauth.vk.com")!)
+        if let vkc = vkCookies {
+            for cookie in vkc {
+                cookies.deleteCookie(cookie)
+            }
+        }
     }
     
     func login() {
