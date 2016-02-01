@@ -18,4 +18,10 @@ struct AccessToken {
         expiresIn = components[1].componentsSeparatedByString("=")[1]
         userID = components[2].componentsSeparatedByString("=")[1]
     }
+    
+    init(token: String, userID: String, expiresIn: String) {
+        self.token = token
+        self.userID = userID
+        self.expiresIn = expiresIn
+    }
 }
