@@ -14,28 +14,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        getAccessToken()
-        
+        RequestManager.sharedManager.loadToken()
         if RequestManager.sharedManager.accessToken == nil {
-            showLoginScreen()
+            LoginManager.sharedManager.showLoginScreen()
         }
         
         return true
-    }
-
-    private func getAccessToken() {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        
-        if let token = defaults.objectForKey("token") as? String, userID = defaults.objectForKey("userID") as? String, expiresIn = defaults.objectForKey("expiresIn") as? String {
-            RequestManager.sharedManager.accessToken = AccessToken(token: token, userID: userID, expiresIn: expiresIn)
-        }
-    }
-    
-    private func showLoginScreen() {
-        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        let startVC = storyboard.instantiateViewControllerWithIdentifier("loginScreen") as! StartViewController
-        let navVC = UINavigationController(rootViewController: startVC)
-        window?.rootViewController = navVC
     }
 }
 

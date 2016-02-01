@@ -164,6 +164,10 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
     
+    private func killPlayer() {
+        player.replaceCurrentItemWithPlayerItem(nil)
+    }
+    
     private func playAudioFromIndex(index: Int) {
         killTimeObserver()
         currentAudio = audios[index]
@@ -320,6 +324,12 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     //MARK: - Actions
 
+    @IBAction func logoutAction(sender: AnyObject) {
+        LoginManager.sharedManager.logout()
+        killPlayer()
+    }
+    
+    
     @IBAction func playAction(sender: UIButton) {
         if sender.titleLabel!.text! == "Play" {
             updatePlayer(.Play)

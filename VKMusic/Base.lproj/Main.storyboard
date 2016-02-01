@@ -232,7 +232,13 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="l7w-t3-fhq"/>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="l7w-t3-fhq">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="LF4-df-sR3">
+                            <connections>
+                                <action selector="logoutAction:" destination="XuN-XS-zrm" id="Wve-50-sva"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="controlView" destination="Eq3-Si-Uah" id="deT-Yx-JX6"/>
                         <outlet property="tableView" destination="xWR-ss-gwE" id="0a6-zA-sVE"/>

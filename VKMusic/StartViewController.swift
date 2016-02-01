@@ -16,10 +16,7 @@ class StartViewController: UIViewController {
     
     @IBAction func loginAction(sender: AnyObject) {
         RequestManager.sharedManager.authorizeUser {
-            let appDelegate = UIApplication.sharedApplication().delegate
-            let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            let musicVC = storyboard.instantiateInitialViewController()
-            appDelegate?.window??.rootViewController = musicVC
+            LoginManager.sharedManager.login()
         }
     }
 }

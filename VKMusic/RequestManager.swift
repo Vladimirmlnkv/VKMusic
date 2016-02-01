@@ -17,12 +17,8 @@ class RequestManager {
     
     func authorizeUser(success: (Void) -> Void) {
         let loginVC = LoginViewController { (accessToken) -> Void in
-            self.accessToken = accessToken
-            if let token = self.accessToken {
-                let userDefaults = NSUserDefaults.standardUserDefaults()
-                userDefaults.setObject(token.token, forKey: "token")
-                userDefaults.setObject(token.userID, forKey: "userID")
-                userDefaults.setObject(token.expiresIn, forKey: "expiresIn")
+            if let token = accessToken {
+                self.accessToken = token
                 success()
             }
         }
@@ -61,6 +57,30 @@ class RequestManager {
                         let data = Array(serverData[1..<serverData.count])
                         success(serverData: data)
                     }
+        }
+    }
+    
+    //MARK: - Token Methods
+    
+    func removeToken() {
+        accessToken = nil
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.removeObjectForKey("token")
+        defaults.removeObjectForKey("userID")
+        defaults.removeObjectForKey("expiresIn")
+    }
+    
+    func saveToken() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(accessToken!.token, forKey: "token")
+        defaults.setObject(accessToken!.userID, forKey: "userID")
+        defaults.setObject(accessToken!.expiresIn, forKey: "expiresIn")
+    }
+    
+    func loadToken() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let token = defaults.objectForKey("token") as? String, userID = defaults.objectForKey("userID") as? String, expiresIn = defaults.objectForKey("expiresIn") as? String {
+            accessToken = AccessToken(token: token, userID: userID, expiresIn: expiresIn)
         }
     }
     
