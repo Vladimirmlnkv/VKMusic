@@ -18,7 +18,11 @@ class RequestManager {
     func authorizeUser(success: (Void) -> Void) {
         let loginVC = LoginViewController { (accessToken) -> Void in
             self.accessToken = accessToken
-            if let _ = self.accessToken {
+            if let token = self.accessToken {
+                let userDefaults = NSUserDefaults.standardUserDefaults()
+                userDefaults.setObject(token.token, forKey: "token")
+                userDefaults.setObject(token.userID, forKey: "userID")
+                userDefaults.setObject(token.expiresIn, forKey: "expiresIn")
                 success()
             }
         }

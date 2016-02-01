@@ -12,6 +12,7 @@
 		7E39F06B1C57F3AA007B147E /* AudioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E39F06A1C57F3AA007B147E /* AudioCell.swift */; };
 		7E4617171C59139C005BE1F7 /* MusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4617161C59139C005BE1F7 /* MusicViewController.swift */; };
 		7E4617191C591A1A005BE1F7 /* ControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4617181C591A1A005BE1F7 /* ControlView.swift */; };
+		7E5328DC1C5F583600D7E537 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5328DB1C5F583600D7E537 /* StartViewController.swift */; };
 		7EE8012B1C56270A003FD687 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8012A1C56270A003FD687 /* AppDelegate.swift */; };
 		7EE801301C56270A003FD687 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EE8012E1C56270A003FD687 /* Main.storyboard */; };
 		7EE801321C56270A003FD687 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EE801311C56270A003FD687 /* Assets.xcassets */; };
@@ -27,6 +28,7 @@
 		7E39F06A1C57F3AA007B147E /* AudioCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioCell.swift; sourceTree = "<group>"; };
 		7E4617161C59139C005BE1F7 /* MusicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
 		7E4617181C591A1A005BE1F7 /* ControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlView.swift; sourceTree = "<group>"; };
+		7E5328DB1C5F583600D7E537 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		7EE801271C56270A003FD687 /* VKMusic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VKMusic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EE8012A1C56270A003FD687 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7EE8012F1C56270A003FD687 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 		7EE801431C5633A9003FD687 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				7E5328DB1C5F583600D7E537 /* StartViewController.swift */,
 				7EE8013F1C562DCD003FD687 /* LoginViewController.swift */,
 				7E4617161C59139C005BE1F7 /* MusicViewController.swift */,
 			);
@@ -274,6 +277,7 @@
 				7EE801401C562DCD003FD687 /* LoginViewController.swift in Sources */,
 				7EE8012B1C56270A003FD687 /* AppDelegate.swift in Sources */,
 				7E4617171C59139C005BE1F7 /* MusicViewController.swift in Sources */,
+				7E5328DC1C5F583600D7E537 /* StartViewController.swift in Sources */,
 				7E39F06B1C57F3AA007B147E /* AudioCell.swift in Sources */,
 				7EE8013E1C562BCC003FD687 /* RequestManager.swift in Sources */,
 				7EE801451C565C9E003FD687 /* AccessToken.swift in Sources */,

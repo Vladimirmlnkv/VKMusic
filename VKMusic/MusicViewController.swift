@@ -64,7 +64,7 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
         generateSearchController()
         loadAudios()
     }
-    
+
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         killTimeObserver()
@@ -123,13 +123,11 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     private func loadAudios() {
-        RequestManager.sharedManager.authorizeUser {
-            RequestManager.sharedManager.getAudios { serverData in
-                for data in serverData {
-                    let audio = Audio(serverData: data as! [String: AnyObject])
-                    self.allAudios.append(audio)
-                    self.tableView.reloadData()
-                }
+        RequestManager.sharedManager.getAudios { serverData in
+            for data in serverData {
+                let audio = Audio(serverData: data as! [String: AnyObject])
+                self.allAudios.append(audio)
+                self.tableView.reloadData()
             }
         }
     }

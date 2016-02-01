@@ -22,10 +22,42 @@
             </objects>
             <point key="canvasLocation" x="422" y="1232"/>
         </scene>
+        <!--Start View Controller-->
+        <scene sceneID="6zd-Gu-cL8">
+            <objects>
+                <viewController storyboardIdentifier="loginScreen" id="p58-YU-mPE" customClass="StartViewController" customModule="VKMusic" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bIw-U2-EVm"/>
+                        <viewControllerLayoutGuide type="bottom" id="eVl-KJ-FZ8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="HNR-Cv-Ost">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N2E-jQ-RRz">
+                                <rect key="frame" x="281" y="285" width="38" height="30"/>
+                                <state key="normal" title="Login"/>
+                                <connections>
+                                    <action selector="loginAction:" destination="p58-YU-mPE" eventType="touchUpInside" id="k84-oH-4YH"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="N2E-jQ-RRz" firstAttribute="centerY" secondItem="HNR-Cv-Ost" secondAttribute="centerY" id="qEx-P6-RLB"/>
+                            <constraint firstItem="N2E-jQ-RRz" firstAttribute="centerX" secondItem="HNR-Cv-Ost" secondAttribute="centerX" id="yVl-RA-bPS"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="P6u-rm-bOL"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lq9-VQ-KO9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-328" y="1232"/>
+        </scene>
         <!--Root View Controller-->
         <scene sceneID="LgF-SQ-qob">
             <objects>
-                <viewController id="XuN-XS-zrm" customClass="MusicViewController" customModule="VKMusic" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="musicScreen" id="XuN-XS-zrm" customClass="MusicViewController" customModule="VKMusic" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JWl-0h-xnz"/>
                         <viewControllerLayoutGuide type="bottom" id="ieK-9x-5vP"/>
