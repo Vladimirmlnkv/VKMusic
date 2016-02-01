@@ -176,6 +176,9 @@ class MusicViewController: UIViewController, UITableViewDataSource, UITableViewD
         addTimeObeserver()
         controlView.updateInfo(titile: currentAudio.title, artist: currentAudio.artist, duration: currentAudio.duration)
         controlView.updatePlayButton(.Play)
+        if currentSection == 1 && index >= audios.count - 2{
+            searchForAudios()
+        }
     }
     
     private func updatePlayer(action: UpdateAction) {
