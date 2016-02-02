@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class AudioCell: UITableViewCell {
+class AudioCell: UITableViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
@@ -18,7 +18,7 @@ final class AudioCell: UITableViewCell {
         durationLabel.text? = durationString(duration)
     }
     
-    private func durationString(duration: Int) -> String {
+    func durationString(duration: Int) -> String {
         let minutes = duration / 60
         let seconds = duration - minutes * 60
         if seconds < 10 {

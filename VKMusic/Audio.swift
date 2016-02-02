@@ -14,15 +14,19 @@ func ==(lhs: Audio, rhs: Audio) -> Bool {
 
 struct Audio: Equatable {
     
+    var id: Int
     let url: String
     let title: String
     let artist: String
     let duration: Int
+    var ownerID: Int
     
     init(serverData: [String: AnyObject]) {
         url = "\(serverData["url"]!)"
         title = "\(serverData["title"]!)"
         artist = "\(serverData["artist"]!)"
         duration = serverData["duration"] as! Int
+        id = serverData["aid"] as! Int
+        ownerID = serverData["owner_id"] as! Int
     }
 }

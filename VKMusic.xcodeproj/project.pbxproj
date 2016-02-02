@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5967EDED50A93B8DE010DAB3 /* Pods_VKMusic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF98D414E6EF518EF329860 /* Pods_VKMusic.framework */; };
+		7E11BCC41C60D0C700B6266F /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E11BCC31C60D0C700B6266F /* SearchCell.swift */; };
 		7E39F0691C57EE0B007B147E /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E39F0681C57EE0B007B147E /* Audio.swift */; };
 		7E39F06B1C57F3AA007B147E /* AudioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E39F06A1C57F3AA007B147E /* AudioCell.swift */; };
 		7E4617171C59139C005BE1F7 /* MusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4617161C59139C005BE1F7 /* MusicViewController.swift */; };
@@ -25,6 +26,7 @@
 
 /* Begin PBXFileReference section */
 		415822C41FCCD3D79651FCB8 /* Pods-VKMusic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VKMusic.release.xcconfig"; path = "Pods/Target Support Files/Pods-VKMusic/Pods-VKMusic.release.xcconfig"; sourceTree = "<group>"; };
+		7E11BCC31C60D0C700B6266F /* SearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		7E39F0681C57EE0B007B147E /* Audio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		7E39F06A1C57F3AA007B147E /* AudioCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioCell.swift; sourceTree = "<group>"; };
 		7E4617161C59139C005BE1F7 /* MusicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				7E39F06A1C57F3AA007B147E /* AudioCell.swift */,
+				7E11BCC31C60D0C700B6266F /* SearchCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -284,6 +287,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E4617191C591A1A005BE1F7 /* ControlView.swift in Sources */,
+				7E11BCC41C60D0C700B6266F /* SearchCell.swift in Sources */,
 				7E39F0691C57EE0B007B147E /* Audio.swift in Sources */,
 				7EE801401C562DCD003FD687 /* LoginViewController.swift in Sources */,
 				7EE8012B1C56270A003FD687 /* AppDelegate.swift in Sources */,

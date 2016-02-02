@@ -245,11 +245,13 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! AudioCell
+        var cell: AudioCell
         var audio: Audio
         if indexPath.section == 0 {
+            cell = tableView.dequeueReusableCellWithIdentifier("cell") as! AudioCell
             audio = audios[indexPath.row]
         } else {
+            cell = tableView.dequeueReusableCellWithIdentifier("searchCell") as! SearchCell
             audio = searchAudious[indexPath.row]
             if indexPath.row >= searchAudious.count - 5 {
                 searchForAudios()
@@ -326,6 +328,19 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
     
     //MARK: - Actions
 
+    @IBAction func addAction(sender: AnyObject) {
+        let button = sender as! UIButton
+        let cell = button.superview?.superview as? UITableViewCell
+        if let c = cell {
+            let row = tableView.indexPathForCell(c)!.row
+            var audio = searchAudious[row]
+            RequestManager.sharedManager.addAudio(audio){ ownerID in
+                audio.ownerID = ownerID
+                self.allAudios.insert(audio, atIndex: 0)
+            }
+        }
+    }
+    
     @IBAction func logoutAction(sender: AnyObject) {
         LoginManager.sharedManager.logout()
         killPlayer()

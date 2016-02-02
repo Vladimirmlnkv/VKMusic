@@ -110,6 +110,51 @@
                                             <outlet property="titleLabel" destination="0t9-MZ-AuG" id="hAh-kb-8td"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchCell" id="3VR-JO-Ce4" customClass="SearchCell" customModule="VKMusic" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="136" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3VR-JO-Ce4" id="zXn-u0-7ot">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wM8-RX-T5K">
+                                                    <rect key="frame" x="489" y="11" width="73" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="73" id="F7q-LV-x88"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZFm-dd-Dv7">
+                                                    <rect key="frame" x="8" y="11" width="503" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="63H-DI-U7Q">
+                                                    <rect key="frame" x="570" y="11" width="22" height="22"/>
+                                                    <connections>
+                                                        <action selector="addAction:" destination="XuN-XS-zrm" eventType="touchUpInside" id="Et9-WY-c5m"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="63H-DI-U7Q" firstAttribute="leading" secondItem="wM8-RX-T5K" secondAttribute="trailing" constant="8" id="0NL-fo-cWv"/>
+                                                <constraint firstItem="wM8-RX-T5K" firstAttribute="leading" secondItem="ZFm-dd-Dv7" secondAttribute="trailing" constant="-22" id="Kxo-bE-GMZ"/>
+                                                <constraint firstItem="ZFm-dd-Dv7" firstAttribute="centerY" secondItem="zXn-u0-7ot" secondAttribute="centerY" id="Zk5-G1-QQ1"/>
+                                                <constraint firstItem="wM8-RX-T5K" firstAttribute="trailing" secondItem="zXn-u0-7ot" secondAttribute="trailingMargin" constant="-30" id="meV-oG-1Ov"/>
+                                                <constraint firstItem="wM8-RX-T5K" firstAttribute="baseline" secondItem="ZFm-dd-Dv7" secondAttribute="baseline" id="nQr-RX-WwP"/>
+                                                <constraint firstItem="63H-DI-U7Q" firstAttribute="top" secondItem="zXn-u0-7ot" secondAttribute="topMargin" constant="3" id="oVC-Dd-5Ph"/>
+                                                <constraint firstItem="ZFm-dd-Dv7" firstAttribute="leading" secondItem="zXn-u0-7ot" secondAttribute="leadingMargin" id="rDw-Pb-MIm"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="addButton" destination="63H-DI-U7Q" id="4gJ-Ku-47s"/>
+                                            <outlet property="durationLabel1" destination="wM8-RX-T5K" id="kHG-8h-752"/>
+                                            <outlet property="titleLabel1" destination="ZFm-dd-Dv7" id="pUf-eH-YSR"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                                 <variation key="default">
                                     <mask key="constraints">

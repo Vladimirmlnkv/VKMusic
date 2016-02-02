@@ -60,6 +60,18 @@ final class RequestManager {
         }
     }
     
+    func addAudio(audio: Audio, success: (ownerID: Int) -> Void) {
+        let parameters = ["audio_id" : audio.id,
+                            "owner_id" : audio.ownerID,
+                            "access_token" : accessToken!.token]
+        Alamofire.request(.GET, "https://api.vk.com/method/audio.add", parameters: parameters as? [String: AnyObject]).responseJSON {response in
+            let ownerID = response.result.value!["response"] as? Int
+            if let id = ownerID {
+                success(ownerID: id)
+            }
+        }
+    }
+    
     //MARK: - Token Methods
     
     func removeToken() {
