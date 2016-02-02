@@ -104,6 +104,17 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
     
     //MARK: - Support
     
+    private func addAudioFromRow(row: Int) {
+        var audio = searchAudious[row]
+        RequestManager.sharedManager.addAudio(audio){ ownerID in
+            audio.ownerID = ownerID
+            self.allAudios.insert(audio, atIndex: 0)
+            let alert = UIAlertController(title: "\(audio.artist) - \(audio.title)", message: "Added to your audios", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
     private func setAudioSeccion() {
         let audioSeccion = AVAudioSession.sharedInstance()
         do {
@@ -333,11 +344,7 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
         let cell = button.superview?.superview as? UITableViewCell
         if let c = cell {
             let row = tableView.indexPathForCell(c)!.row
-            var audio = searchAudious[row]
-            RequestManager.sharedManager.addAudio(audio){ ownerID in
-                audio.ownerID = ownerID
-                self.allAudios.insert(audio, atIndex: 0)
-            }
+            addAudioFromRow(row)
         }
     }
     
