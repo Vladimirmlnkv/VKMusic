@@ -8,8 +8,7 @@
 
 import UIKit
 
-class SearchCell: AudioCell {
-
+final class SearchCell: AudioCell {
 
     @IBOutlet weak var durationLabel1: UILabel!
     @IBOutlet weak var titleLabel1: UILabel!
