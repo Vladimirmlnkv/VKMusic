@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginManager {
+final class LoginManager {
     static let sharedManager = LoginManager()
 
     func showLoginScreen() {

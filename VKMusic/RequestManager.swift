@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class RequestManager {
+final class RequestManager {
     static let sharedManager = RequestManager()
     var accessToken: AccessToken?
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AudioCell: UITableViewCell {
+final class AudioCell: UITableViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!

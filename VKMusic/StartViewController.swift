@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StartViewController: UIViewController {
+final class StartViewController: UIViewController {
 
     override func viewDidLoad() {
         navigationItem.title? = "Login"

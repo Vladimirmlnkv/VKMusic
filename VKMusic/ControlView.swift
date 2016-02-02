@@ -13,7 +13,7 @@ enum PlayButtonState {
     case Pause
 }
 
-class ControlView: UIView {
+final class ControlView: UIView {
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var currentDurationLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!

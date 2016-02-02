@@ -10,7 +10,7 @@ import UIKit
 
 typealias AuthorizationResponder = (accessToken: AccessToken?) -> Void
 
-class LoginViewController: UIViewController, UIWebViewDelegate {
+final class LoginViewController: UIViewController, UIWebViewDelegate {
     
     var webView: UIWebView!
     var compelition: AuthorizationResponder?
