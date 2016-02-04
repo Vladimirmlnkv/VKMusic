@@ -10,7 +10,7 @@ import UIKit
 
 final class LoginManager {
     static let sharedManager = LoginManager()
-
+//TODO: check if token expired
     func showLoginScreen() {
         let appDelegate = UIApplication.sharedApplication().delegate
         let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
