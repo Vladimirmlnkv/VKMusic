@@ -60,15 +60,30 @@ final class RequestManager {
         }
     }
     
-    func addAudio(audio: Audio, success: (ownerID: Int) -> Void) {
+    func addAudio(audio: Audio, success: (newID: Int) -> Void) {
         let parameters = ["audio_id" : audio.id,
                             "owner_id" : audio.ownerID,
                             "access_token" : accessToken!.token]
-        Alamofire.request(.GET, "https://api.vk.com/method/audio.add", parameters: parameters as? [String: AnyObject]).responseJSON {response in
-            let ownerID = response.result.value!["response"] as? Int
-            if let id = ownerID {
-                success(ownerID: id)
-            }
+        Alamofire.request(.GET, "https://api.vk.com/method/audio.add", parameters: parameters as? [String: AnyObject])
+                .responseJSON {response in
+                    let newID = response.result.value!["response"] as? Int
+                    if let id = newID {
+                        success(newID: id)
+                    }
+                }
+    }
+    
+    func deleteAudio(audio: Audio, success: (Void) -> Void) {
+        let parameters = ["audio_id" : audio.id,
+                            "owner_id" : audio.ownerID,
+                            "access_token" : accessToken!.token]
+        Alamofire.request(.GET, "https://api.vk.com/method/audio.delete", parameters: parameters as? [String: AnyObject])
+            .responseJSON { response in
+                if let resp = response.result.value!["response"] as? Int {
+                    if resp == 1 {
+                        success()
+                    }
+                }
         }
     }
     

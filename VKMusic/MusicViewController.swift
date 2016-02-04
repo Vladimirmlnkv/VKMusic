@@ -53,6 +53,8 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.allowsMultipleSelectionDuringEditing = false
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("handleAudioSessionRouteChangeNotification:"), name: AVAudioSessionRouteChangeNotification, object: nil)
 
         tableView.delegate = self
@@ -104,10 +106,30 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
     
     //MARK: - Support
     
+    private func deleteAudioFromIndexPath(indexPath: NSIndexPath) {
+        let audio = audios[indexPath.row]
+        RequestManager.sharedManager.deleteAudio(audio, success: {
+            if self.currentAudio == audio {
+                self.updatePlayer(.Next)
+            }
+            if self.audios == self.filteredAudios {
+                self.allAudios.removeAtIndex(indexPath.row)
+                self.filteredAudios.removeAtIndex(indexPath.row)
+            } else {
+                self.allAudios.removeAtIndex(indexPath.row)
+            }
+            self.tableView.beginUpdates()
+            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
+            self.tableView.endUpdates()
+        })
+    }
+    
     private func addAudioFromRow(row: Int) {
         var audio = searchAudious[row]
-        RequestManager.sharedManager.addAudio(audio){ ownerID in
-            audio.ownerID = ownerID
+        RequestManager.sharedManager.addAudio(audio){ newID in
+            print(RequestManager.sharedManager.accessToken!.userID)
+            audio.ownerID = Int(RequestManager.sharedManager.accessToken!.userID)!
+            audio.id = newID
             self.allAudios.insert(audio, atIndex: 0)
             let alert = UIAlertController(title: "\(audio.artist) - \(audio.title)", message: "Added to your audios", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
@@ -237,7 +259,6 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
             }
         }
     }
-
     //MARK: - UITableViewDataSource
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -250,9 +271,9 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 1 {
-            return searchAudious.count - 1
+            return searchAudious.count
         }
-        return audios.count - 1
+        return audios.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -280,6 +301,20 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
         return nil
     }
     
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        if indexPath.section == 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            deleteAudioFromIndexPath(indexPath)
+        }
+    }
+    
     //MARK: - UITableViewDelegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)  {
@@ -288,6 +323,15 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
         playAudioFromIndex(indexPath.row)
     }
     
+    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        if indexPath.section == 0 {
+            return .Delete
+        } else {
+            return .None
+        }
+    }
+
+
     
     //MARK: - Search Methods
     
