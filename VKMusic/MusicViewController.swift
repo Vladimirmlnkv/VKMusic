@@ -109,7 +109,7 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
     private func deleteAudioFromIndexPath(indexPath: NSIndexPath) {
         let audio = audios[indexPath.row]
         RequestManager.sharedManager.deleteAudio(audio, success: {
-            if self.currentAudio == audio {
+            if self.currentAudio != nil && self.currentAudio == audio {
                 self.updatePlayer(.Next)
             }
             if self.audios == self.filteredAudios {
@@ -127,13 +127,18 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
     private func addAudioFromRow(row: Int) {
         var audio = searchAudious[row]
         RequestManager.sharedManager.addAudio(audio){ newID in
-            print(RequestManager.sharedManager.accessToken!.userID)
             audio.ownerID = Int(RequestManager.sharedManager.accessToken!.userID)!
             audio.id = newID
             self.allAudios.insert(audio, atIndex: 0)
             let alert = UIAlertController(title: "\(audio.artist) - \(audio.title)", message: "Added to your audios", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
+            
+            let indexPath = NSIndexPath(forRow: row, inSection: 0)
+            self.filteredAudios.insert(audio, atIndex: 0)
+            self.tableView.beginUpdates()
+            self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
+            self.tableView.endUpdates()
         }
     }
     
