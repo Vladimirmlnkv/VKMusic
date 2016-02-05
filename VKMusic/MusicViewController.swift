@@ -420,8 +420,8 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     @IBAction func remoteAction(sender: UISlider) {
-        updatePlayer(.Pause)
         if player != nil {
+            updatePlayer(.Pause)
             let value = sender.value
             let time = CMTime(value: Int64(value), timescale: 1)
             controlView.updateCurrentTime(Int64(value))
