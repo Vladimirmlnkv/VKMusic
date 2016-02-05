@@ -106,8 +106,8 @@ final class RequestManager {
     
     func loadToken() {
         let defaults = NSUserDefaults.standardUserDefaults()
-        if let token = defaults.objectForKey("token") as? String, userID = defaults.objectForKey("userID") as? String, expiresIn = defaults.objectForKey("expiresIn") as? String {
-            accessToken = AccessToken(token: token, userID: userID, expiresIn: expiresIn)
+        if let token = defaults.objectForKey("token") as? String, userID = defaults.objectForKey("userID") as? String, expiresIn = defaults.objectForKey("expiresIn") as? NSDate {
+                accessToken = AccessToken(token: token, userID: userID, expiresIn: expiresIn)
         }
     }
     

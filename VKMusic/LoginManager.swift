@@ -39,4 +39,13 @@ final class LoginManager {
         appDelegate?.window??.rootViewController = musicVC
         RequestManager.sharedManager.saveToken()
     }
+    
+    func reloginIfNeeded() {
+        let currentDate = NSDate(timeIntervalSinceNow: 0)
+        if RequestManager.sharedManager.accessToken?.expiresIn.timeIntervalSinceDate(currentDate) > 0 {
+            RequestManager.sharedManager.authorizeUser {
+                RequestManager.sharedManager.saveToken()
+            }
+        }
+    }
 }
