@@ -35,7 +35,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N2E-jQ-RRz">
-                                <rect key="frame" x="281" y="285" width="38" height="30"/>
+                                <rect key="frame" x="266" y="277" width="69" height="46"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                 <state key="normal" title="Login"/>
                                 <connections>
                                     <action selector="loginAction:" destination="p58-YU-mPE" eventType="touchUpInside" id="k84-oH-4YH"/>
@@ -44,6 +45,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="N2E-jQ-RRz" firstAttribute="centerX" secondItem="HNR-Cv-Ost" secondAttribute="centerX" id="F5f-U9-9Cc"/>
+                            <constraint firstItem="N2E-jQ-RRz" firstAttribute="centerY" secondItem="HNR-Cv-Ost" secondAttribute="centerY" id="QiH-el-8xD"/>
                             <constraint firstItem="N2E-jQ-RRz" firstAttribute="centerY" secondItem="HNR-Cv-Ost" secondAttribute="centerY" id="qEx-P6-RLB"/>
                             <constraint firstItem="N2E-jQ-RRz" firstAttribute="centerX" secondItem="HNR-Cv-Ost" secondAttribute="centerX" id="yVl-RA-bPS"/>
                         </constraints>
@@ -71,7 +74,6 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="380" id="nzU-R6-Cha"/>
-                                    <constraint firstAttribute="height" constant="444" id="tmT-bD-yDQ"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="8z7-cp-WPB" customClass="AudioCell" customModule="VKMusic" customModuleProvider="target">
