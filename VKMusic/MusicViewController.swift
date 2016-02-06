@@ -30,7 +30,6 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
     private var filteredAudios = [Audio]()
     private var searchAudious = [Audio]()
     private var audios: [Audio] {
-        get {
             if currentSection == 0 {
                 if searchController.active && searchController.searchBar.text != "" {
                     return filteredAudios
@@ -40,7 +39,6 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
             } else {
                 return searchAudious
             }
-        }
     }
     private var currentAudio: Audio!
 
@@ -55,7 +53,6 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
         super.viewDidLoad()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("handleAudioSessionRouteChangeNotification:"), name: AVAudioSessionRouteChangeNotification, object: nil)
-        
         tableView.allowsMultipleSelectionDuringEditing = false
         tableView.delegate = self
         tableView.dataSource = self
@@ -108,7 +105,7 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
     
     private func deleteAudioFromIndexPath(indexPath: NSIndexPath) {
         let audio = audios[indexPath.row]
-        RequestManager.sharedManager.deleteAudio(audio, success: {
+        RequestManager.sharedManager.deleteAudio(audio) {
             if self.currentAudio != nil && self.currentAudio == audio {
                 self.updatePlayer(.Next)
             }
@@ -121,7 +118,7 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
             self.tableView.beginUpdates()
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
             self.tableView.endUpdates()
-        })
+        }
     }
     
     private func addAudioFromRow(row: Int) {
@@ -174,8 +171,8 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
             for data in serverData {
                 let audio = Audio(serverData: data as! [String: AnyObject])
                 self.allAudios.append(audio)
-                self.tableView.reloadData()
             }
+            self.tableView.reloadData()
         }
     }
     
@@ -396,7 +393,7 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     //MARK: - Actions
-
+    
     @IBAction func addAction(sender: AnyObject) {
         let button = sender as! UIButton
         let cell = button.superview?.superview as? UITableViewCell
