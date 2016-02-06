@@ -53,10 +53,10 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.allowsMultipleSelectionDuringEditing = false
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("handleAudioSessionRouteChangeNotification:"), name: AVAudioSessionRouteChangeNotification, object: nil)
-
+        
+        tableView.allowsMultipleSelectionDuringEditing = false
         tableView.delegate = self
         tableView.dataSource = self
         navigationItem.title! = "Music"
@@ -64,7 +64,7 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
         setCommandCenter()
         setAudioSeccion()
         generateSearchController()
-        loadAudios()
+        getAudious()
     }
 
     override func viewDidDisappear(animated: Bool) {
@@ -160,14 +160,21 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
         searchController.searchBar.delegate = self
     }
     
+    private func getAudious() {
+        let shouldLogin = LoginManager.sharedManager.reloginIfNeeded {
+            self.loadAudios()
+        }
+        if !shouldLogin {
+            loadAudios()
+        }
+    }
+    
     private func loadAudios() {
-        LoginManager.sharedManager.reloginIfNeeded {
-            RequestManager.sharedManager.getAudios { serverData in
-                for data in serverData {
-                    let audio = Audio(serverData: data as! [String: AnyObject])
-                    self.allAudios.append(audio)
-                    self.tableView.reloadData()
-                }
+        RequestManager.sharedManager.getAudios { serverData in
+            for data in serverData {
+                let audio = Audio(serverData: data as! [String: AnyObject])
+                self.allAudios.append(audio)
+                self.tableView.reloadData()
             }
         }
     }
