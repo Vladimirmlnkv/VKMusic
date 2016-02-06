@@ -17,9 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         RequestManager.sharedManager.loadToken()
         if RequestManager.sharedManager.accessToken == nil {
             LoginManager.sharedManager.showLoginScreen()
-        }
-        LoginManager.sharedManager.reloginIfNeeded()
-        
+        }        
         return true
     }
 }

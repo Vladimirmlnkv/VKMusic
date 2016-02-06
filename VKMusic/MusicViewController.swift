@@ -161,11 +161,13 @@ final class MusicViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     private func loadAudios() {
-        RequestManager.sharedManager.getAudios { serverData in
-            for data in serverData {
-                let audio = Audio(serverData: data as! [String: AnyObject])
-                self.allAudios.append(audio)
-                self.tableView.reloadData()
+        LoginManager.sharedManager.reloginIfNeeded {
+            RequestManager.sharedManager.getAudios { serverData in
+                for data in serverData {
+                    let audio = Audio(serverData: data as! [String: AnyObject])
+                    self.allAudios.append(audio)
+                    self.tableView.reloadData()
+                }
             }
         }
     }
