@@ -42,7 +42,7 @@ final class LoginManager {
     
     func reloginIfNeeded(success: (Void) -> Void) -> Bool {
         let currentDate = NSDate(timeIntervalSinceNow: 0)
-        if RequestManager.sharedManager.accessToken?.expiresIn.timeIntervalSinceDate(currentDate) > 0 {
+        if RequestManager.sharedManager.accessToken?.expiresIn.timeIntervalSinceDate(currentDate) < 0 {
             RequestManager.sharedManager.authorizeUser {
                 RequestManager.sharedManager.saveToken()
                 success()
