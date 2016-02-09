@@ -9,16 +9,20 @@
 import Foundation
 import MediaPlayer
 
-class CommandCenter {
+class CommandCenter: NSObject {
     
     static let defaultCenter = CommandCenter()
     
-    private let commandCenter = MPRemoteCommandCenter.sharedCommandCenter()
     private let player = AudioPlayer.defaultPlayer
     
-    private init() {
+    private override init() {
+        super.init()
         setCommandCenter()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("handleAudioSessionRouteChangeNotification:"), name: AVAudioSessionRouteChangeNotification, object: nil)
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     //MARK: - Notifications
@@ -36,6 +40,7 @@ class CommandCenter {
     //MARK: - Remote Command Center
     
     private func setCommandCenter() {
+        let commandCenter = MPRemoteCommandCenter.sharedCommandCenter()
         commandCenter.pauseCommand.addTarget(self, action: Selector("remoteCommandPause"))
         commandCenter.playCommand.addTarget(self, action: Selector("remoteCommandPlay"))
         commandCenter.nextTrackCommand.addTarget(self, action: Selector("remoteCommandNext"))
