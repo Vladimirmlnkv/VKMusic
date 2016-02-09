@@ -13,8 +13,6 @@ class AudioPlayer {
     
     static let defaultPlayer = AudioPlayer()
     
-    private let commandCenter = CommandCenter.defaultCenter
-    
     private var player: AVPlayer!
     var currentAudio: Audio!
     private var currentPlayList = [Audio]()
@@ -26,7 +24,7 @@ class AudioPlayer {
         let playerItem = AVPlayerItem(URL: NSURL(string: currentAudio.url)!)
         player = AVPlayer(playerItem: playerItem)
         player.play()
-        commandCenter.setNowPlayingInfo()
+        CommandCenter.defaultCenter.setNowPlayingInfo()
     }
     
     func play() {
@@ -57,5 +55,9 @@ class AudioPlayer {
         if player != nil {
             player.replaceCurrentItemWithPlayerItem(nil)
         }
+    }
+    
+    func setPlayList(playList: [Audio]) {
+        currentPlayList = playList
     }
 }
