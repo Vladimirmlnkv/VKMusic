@@ -16,14 +16,36 @@ class AudioPlayer {
     private var player: AVPlayer!
     var currentAudio: Audio!
     private var currentPlayList = [Audio]()
+    private var timeObserber: AnyObject?
+
+    //MARK: - Time Observer
+    
+    private func addTimeObeserver() {
+        let interval = CMTime(seconds: 1, preferredTimescale: 1)
+        timeObserber = player.addPeriodicTimeObserverForInterval(interval, queue: dispatch_get_main_queue()) {
+            (time: CMTime) -> Void in
+            let currentTime  = Int64(time.value) / Int64(time.timescale)
+            if currentTime == Int64(self.currentAudio.duration) {
+                self.next()
+            }
+        }
+    }
+    
+    private func killTimeObserver() {
+        if let observer = timeObserber {
+            player.removeTimeObserver(observer)
+        }
+    }
     
     //MARK: - Public API
     
     func playAudioFromIndex(index: Int) {
+        killTimeObserver()
         currentAudio = currentPlayList[index]
         let playerItem = AVPlayerItem(URL: NSURL(string: currentAudio.url)!)
         player = AVPlayer(playerItem: playerItem)
         player.play()
+        addTimeObeserver()
         CommandCenter.defaultCenter.setNowPlayingInfo()
     }
     
