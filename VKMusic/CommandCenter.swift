@@ -18,11 +18,22 @@ class CommandCenter: NSObject {
     private override init() {
         super.init()
         setCommandCenter()
+        setAudioSeccion()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("handleAudioSessionRouteChangeNotification:"), name: AVAudioSessionRouteChangeNotification, object: nil)
     }
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    private func setAudioSeccion() {
+        let audioSeccion = AVAudioSession.sharedInstance()
+        do {
+            try audioSeccion.setCategory("AVAudioSessionCategoryPlayback")
+            try audioSeccion.setActive(true)
+        } catch {
+            print("ERROR")
+        }
     }
     
     //MARK: - Notifications
