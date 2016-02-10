@@ -10,4 +10,10 @@ import UIKit
 
 class CachedAudiousViewController: UITableViewController {
 
+    
+    //MARK: - Actions
+    
+    @IBAction func logoutAction(sender: AnyObject) {
+    }
+    
 }

@@ -21,15 +21,13 @@ class MyAudiosViewController: UITableViewController, UISearchResultsUpdating {
         return allAudios
     }
         
-    private var currentSection = 0
     private let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.allowsMultipleSelectionDuringEditing = false
-        navigationItem.title? = "Music"
-        
+        title? = "Music"
         generateSearchController()
         getAudious()
     }
@@ -127,7 +125,6 @@ class MyAudiosViewController: UITableViewController, UISearchResultsUpdating {
     //MARK: - UITableViewDelegate
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)  {
-        currentSection = indexPath.section
         player.setPlayList(audios)
         player.playAudioFromIndex(indexPath.row)
     }
@@ -135,5 +132,13 @@ class MyAudiosViewController: UITableViewController, UISearchResultsUpdating {
     override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
         return .Delete
     }
+    
+    //MARK: - Actions
+    
+    @IBAction func logoutAction(sender: AnyObject) {
+        LoginManager.sharedManager.logout()
+        player.kill()
+    }
+    
 
 }
