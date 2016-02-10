@@ -20,6 +20,22 @@ class SearchAudiosViewController: UITableViewController, UISearchBarDelegate {
         generateSearchController()
     }
     
+    //MARK: - Support
+    
+    private func showMessage() {
+        let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: view.bounds.size.height))
+        
+        messageLabel.text = "Please search for audios.";
+        messageLabel.textColor = UIColor.blackColor()
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .Center
+        messageLabel.font = UIFont(name: ".SFUIText-Medium", size: 20)
+        messageLabel.sizeToFit()
+        
+        tableView.backgroundView = messageLabel
+        tableView.separatorStyle = .None
+    }
+    
     //NARK: - Search
     
     private func generateSearchController() {
@@ -31,7 +47,7 @@ class SearchAudiosViewController: UITableViewController, UISearchBarDelegate {
     
     private func searchForAudios() {
         if searchController.active && searchController.searchBar.text != "" {
-            RequestManager.sharedManager.searchAudios(searchText: searchController.searchBar.text!, offset: searchAudious.count, count: 30) { (serverData) -> Void in
+            RequestManager.sharedManager.searchAudios(searchText: searchController.searchBar.text!, offset: searchAudious.count, count: 30) { serverData in
                 for data in serverData {
                     let audio = Audio(serverData: data as! [String: AnyObject])
                     self.searchAudious.append(audio)
@@ -57,6 +73,16 @@ class SearchAudiosViewController: UITableViewController, UISearchBarDelegate {
     
     //MARK: - UITableViewDataSource
     
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        if searchAudious.count > 0 {
+            return 1
+        } else {
+            showMessage()
+        }
+        
+        return 0
+    }
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchAudious.count
     }
@@ -65,6 +91,9 @@ class SearchAudiosViewController: UITableViewController, UISearchBarDelegate {
         let cell = tableView.dequeueReusableCellWithIdentifier("searchCell") as! SearchCell
         let audio = searchAudious[indexPath.row]
         cell.updateLabels(title: audio.title, artist: audio.artist, duration: audio.duration)
+        if indexPath.row >= searchAudious.count - 5 {
+            searchForAudios()
+        }
         return cell
     }
     
