@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5967EDED50A93B8DE010DAB3 /* Pods_VKMusic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF98D414E6EF518EF329860 /* Pods_VKMusic.framework */; };
+		7E0464131C6C8DB500EA0D1C /* AudiosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0464121C6C8DB500EA0D1C /* AudiosViewController.swift */; };
 		7E11BCC41C60D0C700B6266F /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E11BCC31C60D0C700B6266F /* SearchCell.swift */; };
 		7E39F0691C57EE0B007B147E /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E39F0681C57EE0B007B147E /* Audio.swift */; };
 		7E39F06B1C57F3AA007B147E /* AudioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E39F06A1C57F3AA007B147E /* AudioCell.swift */; };
@@ -31,6 +32,7 @@
 
 /* Begin PBXFileReference section */
 		415822C41FCCD3D79651FCB8 /* Pods-VKMusic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VKMusic.release.xcconfig"; path = "Pods/Target Support Files/Pods-VKMusic/Pods-VKMusic.release.xcconfig"; sourceTree = "<group>"; };
+		7E0464121C6C8DB500EA0D1C /* AudiosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudiosViewController.swift; sourceTree = "<group>"; };
 		7E11BCC31C60D0C700B6266F /* SearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		7E39F0681C57EE0B007B147E /* Audio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		7E39F06A1C57F3AA007B147E /* AudioCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioCell.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				7E5328DB1C5F583600D7E537 /* StartViewController.swift */,
 				7EE8013F1C562DCD003FD687 /* LoginViewController.swift */,
 				7E4617161C59139C005BE1F7 /* MusicViewController.swift */,
+				7E0464121C6C8DB500EA0D1C /* AudiosViewController.swift */,
 				7E6E98DA1C6A2CF6008A805F /* MyAudiosViewController.swift */,
 				7E6E98DC1C6A2D28008A805F /* SearchAudiosViewController.swift */,
 				7E6E98DE1C6A2D3C008A805F /* CachedAudiousViewController.swift */,
@@ -311,6 +314,7 @@
 				7E4617171C59139C005BE1F7 /* MusicViewController.swift in Sources */,
 				7E5328DE1C5F8FE100D7E537 /* LoginManager.swift in Sources */,
 				7E5328DC1C5F583600D7E537 /* StartViewController.swift in Sources */,
+				7E0464131C6C8DB500EA0D1C /* AudiosViewController.swift in Sources */,
 				7E6E98DF1C6A2D3C008A805F /* CachedAudiousViewController.swift in Sources */,
 				7E39F06B1C57F3AA007B147E /* AudioCell.swift in Sources */,
 				7EE8013E1C562BCC003FD687 /* RequestManager.swift in Sources */,

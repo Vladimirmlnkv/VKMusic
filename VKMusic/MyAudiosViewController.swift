@@ -8,9 +8,9 @@
 
 import UIKit
 
-class MyAudiosViewController: UITableViewController, UISearchResultsUpdating {
+class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
 
-    private let player = AudioPlayer.defaultPlayer
+    //private let player = AudioPlayer.defaultPlayer
     
     private var allAudios = [Audio]()
     private var filteredAudios = [Audio]()
@@ -20,9 +20,7 @@ class MyAudiosViewController: UITableViewController, UISearchResultsUpdating {
         }
         return allAudios
     }
-        
-    private let searchController = UISearchController(searchResultsController: nil)
-    
+            
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,9 +28,18 @@ class MyAudiosViewController: UITableViewController, UISearchResultsUpdating {
         title? = "Music"
         generateSearchController()
         getAudious()
+        
+        refreshControl = UIRefreshControl()
+        refreshControl!.backgroundColor = UIColor.whiteColor()
+        refreshControl!.tintColor = UIColor.grayColor()
+        refreshControl!.addTarget(self, action: Selector("updateAudios"), forControlEvents: .ValueChanged)
     }
     
     //MARK: - Audio
+    
+    @objc private func updateAudios() {
+        refreshControl?.endRefreshing()
+    }
     
     private func getAudious() {
         let shouldLogin = LoginManager.sharedManager.reloginIfNeeded {
@@ -44,7 +51,7 @@ class MyAudiosViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     private func loadAudios() {
-        RequestManager.sharedManager.getAudios { serverData in
+        RequestManager.sharedManager.getAudios{ serverData in
             for data in serverData {
                 let audio = Audio(serverData: data as! [String: AnyObject])
                 self.allAudios.append(audio)
@@ -73,11 +80,9 @@ class MyAudiosViewController: UITableViewController, UISearchResultsUpdating {
     
     //MARK: - Search
     
-    private func generateSearchController() {
+    override func generateSearchController() {
+        super.generateSearchController()
         searchController.searchResultsUpdater = self
-        searchController.dimsBackgroundDuringPresentation = false
-        definesPresentationContext = true
-        tableView.tableHeaderView = searchController.searchBar
     }
     
     private func filterAudiosForSearchText(searchText: String) {
@@ -132,13 +137,4 @@ class MyAudiosViewController: UITableViewController, UISearchResultsUpdating {
     override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
         return .Delete
     }
-    
-    //MARK: - Actions
-    
-    @IBAction func logoutAction(sender: AnyObject) {
-        LoginManager.sharedManager.logout()
-        player.kill()
-    }
-    
-
 }

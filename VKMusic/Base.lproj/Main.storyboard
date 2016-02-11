@@ -95,7 +95,7 @@
                     <navigationItem key="navigationItem" id="J9v-za-Wyw">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="I22-bu-naQ">
                             <connections>
-                                <action selector="logoutAction:" destination="pGm-M9-mAx" id="F88-t3-kNd"/>
+                                <action selector="logoutAction:" destination="pGm-M9-mAx" id="bMI-KJ-89Z"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -167,7 +167,7 @@
                     <navigationItem key="navigationItem" id="Cox-UX-YVu">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="bD3-3n-eby">
                             <connections>
-                                <action selector="logoutAction:" destination="dnq-ph-YJd" id="RFw-Yf-aVk"/>
+                                <action selector="logoutAction:" destination="dnq-ph-YJd" id="j74-5Y-xhg"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -230,7 +230,7 @@
                     <navigationItem key="navigationItem" id="6yX-sQ-xqd">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="zx7-Jd-4S9">
                             <connections>
-                                <action selector="logoutAction:" destination="dcb-L4-Heu" id="X1b-kH-s37"/>
+                                <action selector="logoutAction:" destination="dcb-L4-Heu" id="0dN-zf-jFa"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

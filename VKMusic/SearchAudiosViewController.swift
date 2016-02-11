@@ -8,12 +8,9 @@
 
 import UIKit
 
-class SearchAudiosViewController: UITableViewController, UISearchBarDelegate {
+class SearchAudiosViewController: AudiosViewController, UISearchBarDelegate {
 
-    private let player = AudioPlayer.defaultPlayer
     private var searchAudious = [Audio]()
-
-    private let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,10 +35,8 @@ class SearchAudiosViewController: UITableViewController, UISearchBarDelegate {
     
     //NARK: - Search
     
-    private func generateSearchController() {
-        searchController.dimsBackgroundDuringPresentation = false
-        definesPresentationContext = true
-        tableView.tableHeaderView = searchController.searchBar
+    override func generateSearchController() {
+        super.generateSearchController()
         searchController.searchBar.delegate = self
     }
     
@@ -124,11 +119,6 @@ class SearchAudiosViewController: UITableViewController, UISearchBarDelegate {
             let row = tableView.indexPathForCell(c)!.row
             addAudioFromRow(row)
         }
-    }
-    
-    @IBAction func logoutAction(sender: AnyObject) {
-        LoginManager.sharedManager.logout()
-        player.kill()
     }
     
 }

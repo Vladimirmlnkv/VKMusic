@@ -8,12 +8,7 @@
 
 import UIKit
 
-class CachedAudiousViewController: UITableViewController {
+class CachedAudiousViewController: AudiosViewController {
 
-    
-    //MARK: - Actions
-    
-    @IBAction func logoutAction(sender: AnyObject) {
-    }
     
 }
