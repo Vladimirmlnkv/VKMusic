@@ -9,8 +9,6 @@
 import UIKit
 
 class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
-
-    //private let player = AudioPlayer.defaultPlayer
     
     private var allAudios = [Audio]()
     private var filteredAudios = [Audio]()
@@ -25,8 +23,7 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
         super.viewDidLoad()
         
         tableView.allowsMultipleSelectionDuringEditing = false
-        title? = "Music"
-        generateSearchController()
+        
         getAudious()
         
         refreshControl = UIRefreshControl()
@@ -38,7 +35,16 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
     //MARK: - Audio
     
     @objc private func updateAudios() {
-        refreshControl?.endRefreshing()
+        RequestManager.sharedManager.getAudios{ serverData in
+            let count = serverData.count - self.allAudios.count
+            for var i = count - 1; i >= 0; i-- {
+                let audio = Audio(serverData: serverData[i] as! [String: AnyObject])
+                self.allAudios.insert(audio, atIndex: 0)
+
+            }
+            self.tableView.reloadData()
+            self.refreshControl?.endRefreshing()
+        }
     }
     
     private func getAudious() {
