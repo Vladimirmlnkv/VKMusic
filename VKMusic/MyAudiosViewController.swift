@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating, AudioPlayerDelegate {
+class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
     
     private var allAudios = [Audio]()
     private var filteredAudios = [Audio]()
@@ -19,27 +19,17 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating, Aud
         return allAudios
     }
     
-    private var currentIndex = -1
-            
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
+        screenName = .All
         tableView.allowsMultipleSelectionDuringEditing = true
-        
         getAudious()
     
         refreshControl = UIRefreshControl()
         refreshControl!.backgroundColor = UIColor.whiteColor()
         refreshControl!.tintColor = UIColor.grayColor()
         refreshControl!.addTarget(self, action: Selector("updateAudios"), forControlEvents: .ValueChanged)
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        if currentIndex != -1 {
-            tableView.selectRowAtIndexPath(NSIndexPath(forRow: currentIndex, inSection: 0), animated: false, scrollPosition: .None)
-        }
     }
     
     //MARK: - Audio
@@ -84,6 +74,7 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating, Aud
         RequestManager.sharedManager.deleteAudio(audio) {
             if self.player.currentAudio != nil && self.player.currentAudio == audio {
                 self.player.kill()
+                self.currentIndex = -1
             }
             if self.audios == self.filteredAudios {
                 self.allAudios.removeAtIndex(indexPath.row)
@@ -149,9 +140,12 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating, Aud
     //MARK: - UITableViewDelegate
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)  {
+        if player.playbleScreen != .All {
+            player.playbleScreen = .All
+            player.delegate = self
+            player.setPlayList(audios)
+        }
         currentIndex = indexPath.row
-        player.delegate = self
-        player.setPlayList(audios)
         player.playAudioFromIndex(indexPath.row)
     }
     
@@ -164,13 +158,5 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating, Aud
         if currentIndex != -1 {
             tableView.selectRowAtIndexPath(NSIndexPath(forRow: currentIndex, inSection: 0), animated: false, scrollPosition: .None)
         }
-    }
-    
-    //MARK: - AudioPlayerDelegate
-    
-    func playerWillPlayNextSong(index index: Int, lastIndex: Int) {
-        currentIndex = index
-        tableView.deselectRowAtIndexPath(NSIndexPath(forRow: lastIndex, inSection: 0), animated: true)
-        tableView.selectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true, scrollPosition: .None)
     }
 }

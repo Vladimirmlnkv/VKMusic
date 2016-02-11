@@ -11,6 +11,14 @@ import AVFoundation
 
 protocol AudioPlayerDelegate {
     func playerWillPlayNextSong(index index: Int, lastIndex: Int)
+    func playerWillChangePlaybleScreen()
+}
+
+enum PlaybleScreen {
+    case None
+    case All
+    case Search
+    case Cache
 }
 
 class AudioPlayer {
@@ -21,6 +29,12 @@ class AudioPlayer {
     
     private var player: AVPlayer!
     var currentAudio: Audio!
+    var playbleScreen = PlaybleScreen.None {
+        willSet {
+            delegate?.playerWillChangePlaybleScreen()
+        }
+    }
+    
     private var currentPlayList = [Audio]()
     private var timeObserber: AnyObject?
 

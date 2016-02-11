@@ -14,8 +14,9 @@ class SearchAudiosViewController: AudiosViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        screenName = .Search
     }
-    
+
     //MARK: - Support
     
     private func showMessage() {
@@ -94,6 +95,11 @@ class SearchAudiosViewController: AudiosViewController, UISearchBarDelegate {
     //MARK: - UITableViewDelegate
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)  {
+        if player.playbleScreen != .Search {
+            player.playbleScreen = .Search
+            player.delegate = self
+        }
+        currentIndex = indexPath.row
         player.setPlayList(searchAudious)
         player.playAudioFromIndex(indexPath.row)
     }
@@ -119,5 +125,4 @@ class SearchAudiosViewController: AudiosViewController, UISearchBarDelegate {
             addAudioFromRow(row)
         }
     }
-    
 }
