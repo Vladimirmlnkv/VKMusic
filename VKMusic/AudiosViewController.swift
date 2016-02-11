@@ -14,6 +14,10 @@ class AudiosViewController: UITableViewController {
     
     let searchController = UISearchController(searchResultsController: nil)
     
+    override func viewDidLoad() {
+        generateSearchController()
+    }
+    
     func generateSearchController() {
         searchController.dimsBackgroundDuringPresentation = false
         definesPresentationContext = true
@@ -26,5 +30,4 @@ class AudiosViewController: UITableViewController {
         LoginManager.sharedManager.logout()
         player.kill()
     }
-    
 }

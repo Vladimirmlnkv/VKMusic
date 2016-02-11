@@ -14,7 +14,6 @@ class SearchAudiosViewController: AudiosViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        generateSearchController()
     }
     
     //MARK: - Support
