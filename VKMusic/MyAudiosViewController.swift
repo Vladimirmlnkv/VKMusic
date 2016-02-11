@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
+class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating, AudioPlayerDelegate {
     
     private var allAudios = [Audio]()
     private var filteredAudios = [Audio]()
@@ -18,18 +18,28 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
         }
         return allAudios
     }
+    
+    private var currentIndex = -1
             
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.allowsMultipleSelectionDuringEditing = false
+        tableView.allowsMultipleSelectionDuringEditing = true
         
         getAudious()
-        
+    
         refreshControl = UIRefreshControl()
         refreshControl!.backgroundColor = UIColor.whiteColor()
         refreshControl!.tintColor = UIColor.grayColor()
         refreshControl!.addTarget(self, action: Selector("updateAudios"), forControlEvents: .ValueChanged)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if currentIndex != -1 {
+            tableView.selectRowAtIndexPath(NSIndexPath(forRow: currentIndex, inSection: 0), animated: false, scrollPosition: .None)
+        }
     }
     
     //MARK: - Audio
@@ -37,12 +47,15 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
     @objc private func updateAudios() {
         RequestManager.sharedManager.getAudios{ serverData in
             let count = serverData.count - self.allAudios.count
+            var indexPaths = [NSIndexPath]()
             for var i = count - 1; i >= 0; i-- {
                 let audio = Audio(serverData: serverData[i] as! [String: AnyObject])
                 self.allAudios.insert(audio, atIndex: 0)
-
+                indexPaths.append(NSIndexPath(forRow: i, inSection: 0))
             }
-            self.tableView.reloadData()
+            self.tableView.beginUpdates()
+            self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Left)
+            self.tableView.endUpdates()
             self.refreshControl?.endRefreshing()
         }
     }
@@ -70,7 +83,7 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
         let audio = audios[indexPath.row]
         RequestManager.sharedManager.deleteAudio(audio) {
             if self.player.currentAudio != nil && self.player.currentAudio == audio {
-                self.player.next()
+                self.player.kill()
             }
             if self.audios == self.filteredAudios {
                 self.allAudios.removeAtIndex(indexPath.row)
@@ -136,11 +149,28 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
     //MARK: - UITableViewDelegate
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)  {
+        currentIndex = indexPath.row
+        player.delegate = self
         player.setPlayList(audios)
         player.playAudioFromIndex(indexPath.row)
     }
     
     override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
         return .Delete
+    }
+    
+    override func setEditing(editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        if currentIndex != -1 {
+            tableView.selectRowAtIndexPath(NSIndexPath(forRow: currentIndex, inSection: 0), animated: false, scrollPosition: .None)
+        }
+    }
+    
+    //MARK: - AudioPlayerDelegate
+    
+    func playerWillPlayNextSong(index index: Int, lastIndex: Int) {
+        currentIndex = index
+        tableView.deselectRowAtIndexPath(NSIndexPath(forRow: lastIndex, inSection: 0), animated: true)
+        tableView.selectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true, scrollPosition: .None)
     }
 }

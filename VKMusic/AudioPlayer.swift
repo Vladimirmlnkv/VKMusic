@@ -9,9 +9,15 @@
 import Foundation
 import AVFoundation
 
+protocol AudioPlayerDelegate {
+    func playerWillPlayNextSong(index index: Int, lastIndex: Int)
+}
+
 class AudioPlayer {
     
     static let defaultPlayer = AudioPlayer()
+    
+    var delegate: AudioPlayerDelegate?
     
     private var player: AVPlayer!
     var currentAudio: Audio!
@@ -61,6 +67,9 @@ class AudioPlayer {
         if let currentIndex = currentPlayList.indexOf(currentAudio) {
             if currentIndex + 1 <= currentPlayList.count - 1 {
                 playAudioFromIndex(currentIndex + 1)
+                if let d = delegate {
+                    d.playerWillPlayNextSong(index: currentIndex + 1, lastIndex: currentIndex)
+                }
             }
         }
     }
@@ -69,6 +78,9 @@ class AudioPlayer {
         if let currentIndex = currentPlayList.indexOf(currentAudio) {
             if currentIndex > 0 {
                 playAudioFromIndex(currentIndex - 1)
+                if let d = delegate {
+                    d.playerWillPlayNextSong(index: currentIndex - 1, lastIndex: currentIndex)
+                }
             }
         }
     }
