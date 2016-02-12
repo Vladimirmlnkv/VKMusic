@@ -77,7 +77,8 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
                 self.currentIndex = -1
             }
             if self.audios == self.filteredAudios {
-                self.allAudios.removeAtIndex(indexPath.row)
+                let index = self.allAudios.indexOf(audio)!
+                self.allAudios.removeAtIndex(index)
                 self.filteredAudios.removeAtIndex(indexPath.row)
             } else {
                 self.allAudios.removeAtIndex(indexPath.row)
