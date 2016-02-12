@@ -107,8 +107,13 @@ class SearchAudiosViewController: AudiosViewController, UISearchBarDelegate {
             player.delegate = self
             player.setPlayList(searchAudious)
         }
-        currentIndex = indexPath.row
-        player.playAudioFromIndex(indexPath.row)
+        if currentIndex == indexPath.row {
+            let playerVC = storyboard?.instantiateViewControllerWithIdentifier("playerVC")
+            presentViewController(playerVC!, animated: true, completion: nil)
+        } else {
+            currentIndex = indexPath.row
+            player.playAudioFromIndex(indexPath.row)
+        }
     }
     
     //MARK: - Actions

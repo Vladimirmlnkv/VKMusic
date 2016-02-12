@@ -153,8 +153,13 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
             player.delegate = self
             player.setPlayList(audios)
         }
-        currentIndex = indexPath.row
-        player.playAudioFromIndex(indexPath.row)
+        if currentIndex == indexPath.row {
+            let playerVC = storyboard?.instantiateViewControllerWithIdentifier("playerVC")
+            presentViewController(playerVC!, animated: true, completion: nil)
+        } else {
+            currentIndex = indexPath.row
+            player.playAudioFromIndex(indexPath.row)
+        }
     }
     
     override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
