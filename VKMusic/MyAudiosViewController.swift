@@ -86,6 +86,13 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
             self.tableView.beginUpdates()
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
             self.tableView.endUpdates()
+            self.updatePlayerPlaylistIfNeeded()
+        }
+    }
+    
+    private func updatePlayerPlaylistIfNeeded() {
+        if player.playbleScreen == .All {
+            player.setPlayList(audios)
         }
     }
     

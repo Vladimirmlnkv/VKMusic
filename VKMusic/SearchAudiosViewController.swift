@@ -33,6 +33,12 @@ class SearchAudiosViewController: AudiosViewController, UISearchBarDelegate {
         tableView.separatorStyle = .None
     }
     
+    private func updatePlayerPlaylistIfNeeded() {
+        if player.playbleScreen == .Search {
+            player.setPlayList(searchAudious)
+        }
+    }
+    
     //NARK: - Search
     
     override func generateSearchController() {
@@ -53,6 +59,7 @@ class SearchAudiosViewController: AudiosViewController, UISearchBarDelegate {
             searchAudious = [Audio]()
             tableView.reloadData()
         }
+        updatePlayerPlaylistIfNeeded()
     }
     
     //MARK: - UISearchBarDelegate
@@ -98,9 +105,9 @@ class SearchAudiosViewController: AudiosViewController, UISearchBarDelegate {
         if player.playbleScreen != .Search {
             player.playbleScreen = .Search
             player.delegate = self
+            player.setPlayList(searchAudious)
         }
         currentIndex = indexPath.row
-        player.setPlayList(searchAudious)
         player.playAudioFromIndex(indexPath.row)
     }
     
