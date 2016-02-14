@@ -9,11 +9,6 @@
 import Foundation
 import AVFoundation
 
-protocol AudioPlayerDelegate {
-    func playerWillPlayNextSong(index index: Int, lastIndex: Int)
-    func playerWillChangePlaybleScreen()
-}
-
 enum PlaybleScreen {
     case None
     case All
@@ -21,17 +16,20 @@ enum PlaybleScreen {
     case Cache
 }
 
+let audioPlayerWillPlaySongNotificationKey = "audioPlayerWillPlaySongNotification"
+
+let audioPlayerWillChangePlaybleScreenNotificationKey = "audioPlayerWillChangePlaybleScreenNotification"
+let audioPlayerWillPlayNextSongNotificationKey = "audioPlayerWillPlayNextSongNotification"
+
 class AudioPlayer {
     
     static let defaultPlayer = AudioPlayer()
-    
-    var delegate: AudioPlayerDelegate?
-    
+        
     private var player: AVPlayer!
     var currentAudio: Audio!
     var playbleScreen = PlaybleScreen.None {
         willSet {
-            delegate?.playerWillChangePlaybleScreen()
+            NSNotificationCenter.defaultCenter().postNotificationName(audioPlayerWillChangePlaybleScreenNotificationKey, object: nil, userInfo: nil)
         }
     }
     
@@ -81,9 +79,8 @@ class AudioPlayer {
         if let currentIndex = currentPlayList.indexOf(currentAudio) {
             if currentIndex + 1 <= currentPlayList.count - 1 {
                 playAudioFromIndex(currentIndex + 1)
-                if let d = delegate {
-                    d.playerWillPlayNextSong(index: currentIndex + 1, lastIndex: currentIndex)
-                }
+                let userInfo = ["index": currentIndex + 1, "lastIndex": currentIndex]
+                NSNotificationCenter.defaultCenter().postNotificationName(audioPlayerWillPlayNextSongNotificationKey, object: nil, userInfo: userInfo)
             }
         }
     }
@@ -92,9 +89,8 @@ class AudioPlayer {
         if let currentIndex = currentPlayList.indexOf(currentAudio) {
             if currentIndex > 0 {
                 playAudioFromIndex(currentIndex - 1)
-                if let d = delegate {
-                    d.playerWillPlayNextSong(index: currentIndex - 1, lastIndex: currentIndex)
-                }
+                let userInfo = ["index": currentIndex - 1, "lastIndex": currentIndex]
+                NSNotificationCenter.defaultCenter().postNotificationName(audioPlayerWillPlayNextSongNotificationKey, object: nil, userInfo: userInfo)
             }
         }
     }
@@ -102,6 +98,7 @@ class AudioPlayer {
     func kill() {
         if player != nil {
             player.replaceCurrentItemWithPlayerItem(nil)
+            currentAudio = nil
         }
     }
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AudiosViewController: UITableViewController, AudioPlayerDelegate {
+class AudiosViewController: UITableViewController {
 
     let player = AudioPlayer.defaultPlayer
     var screenName = PlaybleScreen.None
@@ -18,6 +18,14 @@ class AudiosViewController: UITableViewController, AudioPlayerDelegate {
     
     override func viewDidLoad() {
         generateSearchController()
+        
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("handleAudioPlayerWillChangePlaybleScreenNotification"), name: audioPlayerWillChangePlaybleScreenNotificationKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("handleAudioPlayerWillPlayNextSongNotification:"), name: audioPlayerWillPlayNextSongNotificationKey, object: nil)
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -33,23 +41,30 @@ class AudiosViewController: UITableViewController, AudioPlayerDelegate {
         definesPresentationContext = true
         tableView.tableHeaderView = searchController.searchBar
     }
+    
+    //NARK: - Notifications
+    
+    @objc private func handleAudioPlayerWillChangePlaybleScreenNotification() {
+        if screenName != player.playbleScreen {
+            currentIndex = -1
+        }
+    }
+    
+    @objc private func handleAudioPlayerWillPlayNextSongNotification(notification: NSNotification) {
+        if screenName == player.playbleScreen {
+            let info = notification.userInfo!
+            let index = info["index"] as! Int
+            let lastIndex = info["lastIndex"] as! Int
+            currentIndex = index
+            tableView.deselectRowAtIndexPath(NSIndexPath(forRow: lastIndex, inSection: 0), animated: true)
+            tableView.selectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true, scrollPosition: .None)
+        }
+    }
 
     //MARK: - Actions
     
     @IBAction func logoutAction(sender: AnyObject) {
         LoginManager.sharedManager.logout()
         player.kill()
-    }
-    
-    //MARK: - AudioPlayerDelegate
-    
-    func playerWillPlayNextSong(index index: Int, lastIndex: Int) {
-        currentIndex = index
-        tableView.deselectRowAtIndexPath(NSIndexPath(forRow: lastIndex, inSection: 0), animated: true)
-        tableView.selectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true, scrollPosition: .None)
-    }
-    
-    func playerWillChangePlaybleScreen() {
-        currentIndex = -1
     }
 }
