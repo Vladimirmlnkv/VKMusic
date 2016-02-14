@@ -31,8 +31,14 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
         refreshControl!.tintColor = UIColor.grayColor()
         refreshControl!.addTarget(self, action: Selector("updateAudios"), forControlEvents: .ValueChanged)
     }
-    
+
     //MARK: - Audio
+    
+    private func updateCurrentIndex() {
+        if self.player.playbleScreen == self.screenName {
+            self.currentIndex = self.allAudios.indexOf(self.player.currentAudio)!
+        }
+    }
     
     @objc private func updateAudios() {
         RequestManager.sharedManager.getAudios{ serverData in
@@ -47,6 +53,8 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
             self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Left)
             self.tableView.endUpdates()
             self.refreshControl?.endRefreshing()
+            self.updateCurrentIndex()
+            self.updatePlayerPlaylistIfNeeded()
         }
     }
     
@@ -87,11 +95,12 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
             self.tableView.endUpdates()
             self.updatePlayerPlaylistIfNeeded()
+            self.updateCurrentIndex()
         }
     }
     
     private func updatePlayerPlaylistIfNeeded() {
-        if player.playbleScreen == .All {
+        if player.playbleScreen == screenName {
             player.setPlayList(audios)
         }
     }
@@ -150,7 +159,6 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)  {
         if player.playbleScreen != .All {
             player.playbleScreen = .All
-            player.delegate = self
             player.setPlayList(audios)
         }
         if currentIndex == indexPath.row {

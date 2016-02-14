@@ -104,7 +104,6 @@ class SearchAudiosViewController: AudiosViewController, UISearchBarDelegate {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)  {
         if player.playbleScreen != .Search {
             player.playbleScreen = .Search
-            player.delegate = self
             player.setPlayList(searchAudious)
         }
         if currentIndex == indexPath.row {
