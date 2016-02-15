@@ -191,6 +191,11 @@
                         <subviews>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="46v-C2-5O5">
                                 <rect key="frame" x="138" y="412" width="324" height="31"/>
+                                <connections>
+                                    <action selector="remoteAction:" destination="H1d-nO-frL" eventType="valueChanged" id="yKi-lp-yed"/>
+                                    <action selector="remoteEnded:" destination="H1d-nO-frL" eventType="touchUpOutside" id="I4f-br-kJA"/>
+                                    <action selector="remoteEnded:" destination="H1d-nO-frL" eventType="touchUpInside" id="QlP-TS-t1c"/>
+                                </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sHT-Cp-GwW">
                                 <rect key="frame" x="140" y="450" width="42" height="15"/>

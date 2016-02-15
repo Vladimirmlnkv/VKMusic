@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import CoreMedia
 
-class PlayerViewController: UIViewController {
+class PlayerViewController: UIViewController, AudioPlayerDelegate {
     
     private let player = AudioPlayer.defaultPlayer
 
@@ -22,6 +23,11 @@ class PlayerViewController: UIViewController {
     @IBOutlet weak var durationLabel: UILabel!
     
     @IBOutlet weak var playButton: UIButton!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        player.delegate = self
+    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -47,7 +53,24 @@ class PlayerViewController: UIViewController {
         return "\(minutes):\(seconds)"
     }
     
+    //MARK: - AudioPlayerDelegate
+    
+    func audioDidChangeTime(time: Int64) {
+        currenTimeLabel.text? = durationString(Int(time))
+        durationSlider.value = Float(time)
+    }
+    
+    func playerWillPlayNexAudio() {
+        setInfo()
+    }
+    
     //MARK: - Button Actions
+    
+    private func updatePlayButton() {
+        if playButton.imageView?.image == UIImage(named: "play") {
+            playButton.setImage(UIImage(named: "pause"), forState: .Normal)
+        }
+    }
     
     @IBAction func playButtonAction(sender: AnyObject) {
         let button = sender as! UIButton
@@ -62,15 +85,30 @@ class PlayerViewController: UIViewController {
     
     @IBAction func nextButtonAction(sender: AnyObject) {
         player.next()
+        updatePlayButton()
     }
     
     @IBAction func previousButtonAction(sender: AnyObject) {
         player.previous()
+        updatePlayButton()
     }
     
     @IBAction func dissmissButtonAction(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
     //MARK: - Duration Actions
+    
+    @IBAction func remoteAction(sender: UISlider) {
+        player.pause()
+        let value = sender.value
+        let time = CMTime(value: Int64(value), timescale: 1)
+        currenTimeLabel.text? = durationString(Int(value))
+        player.seekToTime(time)
+    }
+    
+    @IBAction func remoteEnded(sender: AnyObject) {
+        player.play()
+    }
     
 }
