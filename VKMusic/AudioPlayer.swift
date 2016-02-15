@@ -16,14 +16,19 @@ enum PlaybleScreen {
     case Cache
 }
 
-let audioPlayerWillPlaySongNotificationKey = "audioPlayerWillPlaySongNotification"
-
 let audioPlayerWillChangePlaybleScreenNotificationKey = "audioPlayerWillChangePlaybleScreenNotification"
 let audioPlayerWillPlayNextSongNotificationKey = "audioPlayerWillPlayNextSongNotification"
+
+protocol AudioPlayerDelegate {
+    func audioDidChangeTime(time: Int64)
+    func playerWillPlayNexAudio()
+}
 
 class AudioPlayer {
     
     static let defaultPlayer = AudioPlayer()
+    
+    var delegate: AudioPlayerDelegate?
         
     private var player: AVPlayer!
     var currentAudio: Audio!
@@ -43,6 +48,9 @@ class AudioPlayer {
         timeObserber = player.addPeriodicTimeObserverForInterval(interval, queue: dispatch_get_main_queue()) {
             (time: CMTime) -> Void in
             let currentTime  = Int64(time.value) / Int64(time.timescale)
+            if let d = self.delegate {
+                d.audioDidChangeTime(currentTime)
+            }
             if currentTime == Int64(self.currentAudio.duration) {
                 self.next()
             }
@@ -65,6 +73,9 @@ class AudioPlayer {
         player.play()
         addTimeObeserver()
         CommandCenter.defaultCenter.setNowPlayingInfo()
+        if let d = self.delegate {
+            d.playerWillPlayNexAudio()
+        }
     }
     
     func play() {
@@ -104,5 +115,9 @@ class AudioPlayer {
     
     func setPlayList(playList: [Audio]) {
         currentPlayList = playList
+    }
+    
+    func seekToTime(time: CMTime) {
+        player.seekToTime(time)
     }
 }
