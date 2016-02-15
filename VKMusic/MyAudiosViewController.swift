@@ -12,7 +12,7 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
     
     private var allAudios = [Audio]()
     private var filteredAudios = [Audio]()
-    private var audios: [Audio] {
+    override var audios: [Audio] {
         if searchController.active && searchController.searchBar.text != "" {
             return filteredAudios
         }
@@ -21,18 +21,21 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         screenName = .All
         tableView.allowsMultipleSelectionDuringEditing = true
         getAudious()
+        addRefreshControl()
+    }
+
+    //MARK: - Support
     
+    private func addRefreshControl() {
         refreshControl = UIRefreshControl()
         refreshControl!.backgroundColor = UIColor.whiteColor()
         refreshControl!.tintColor = UIColor.grayColor()
         refreshControl!.addTarget(self, action: Selector("updateAudios"), forControlEvents: .ValueChanged)
     }
-
-    //MARK: - Audio
     
     private func updateCurrentIndex() {
         if self.player.playbleScreen == self.screenName {
@@ -40,6 +43,14 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
         }
     }
     
+    private func updatePlayerPlaylistIfNeeded() {
+        if player.playbleScreen == screenName {
+            player.setPlayList(audios)
+        }
+    }
+    
+    //MARK: - Audio
+
     @objc private func updateAudios() {
         RequestManager.sharedManager.getAudios{ serverData in
             let count = serverData.count - self.allAudios.count
@@ -99,12 +110,6 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
         }
     }
     
-    private func updatePlayerPlaylistIfNeeded() {
-        if player.playbleScreen == screenName {
-            player.setPlayList(audios)
-        }
-    }
-    
     //MARK: - Search
     
     override func generateSearchController() {
@@ -133,10 +138,6 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
     
     //MARK: - UITableViewDataSource
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return audios.count
-    }
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! AudioCell
         let audio = audios[indexPath.row]
@@ -155,20 +156,6 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
     }
     
     //MARK: - UITableViewDelegate
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)  {
-        if player.playbleScreen != .All {
-            player.playbleScreen = .All
-            player.setPlayList(audios)
-        }
-        if currentIndex == indexPath.row {
-            let playerVC = storyboard?.instantiateViewControllerWithIdentifier("playerVC")
-            presentViewController(playerVC!, animated: true, completion: nil)
-        } else {
-            currentIndex = indexPath.row
-            player.playAudioFromIndex(indexPath.row)
-        }
-    }
     
     override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
         return .Delete

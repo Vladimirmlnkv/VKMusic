@@ -13,6 +13,11 @@ class AudiosViewController: UITableViewController {
     let player = AudioPlayer.defaultPlayer
     var screenName = PlaybleScreen.None
     
+    private final var myAudios = [Audio]()
+    var audios: [Audio] {
+        return myAudios
+    }
+    
     let searchController = UISearchController(searchResultsController: nil)
     var currentIndex = -1
     
@@ -66,5 +71,27 @@ class AudiosViewController: UITableViewController {
     @IBAction func logoutAction(sender: AnyObject) {
         LoginManager.sharedManager.logout()
         player.kill()
+    }
+    
+    //MARK: - UITableViewDataSource
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return audios.count
+    }
+    
+    //MARK: - UITableViewDelegate
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)  {
+        if player.playbleScreen != screenName {
+            player.playbleScreen = screenName
+            player.setPlayList(audios)
+        }
+        if currentIndex == indexPath.row {
+            let playerVC = storyboard?.instantiateViewControllerWithIdentifier("playerVC")
+            presentViewController(playerVC!, animated: true, completion: nil)
+        } else {
+            currentIndex = indexPath.row
+            player.playAudioFromIndex(indexPath.row)
+        }
     }
 }

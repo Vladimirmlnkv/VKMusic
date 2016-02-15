@@ -11,6 +11,9 @@ import UIKit
 class SearchAudiosViewController: AudiosViewController, UISearchBarDelegate {
 
     private var searchAudious = [Audio]()
+    override var audios: [Audio] {
+        return searchAudious
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,10 +88,6 @@ class SearchAudiosViewController: AudiosViewController, UISearchBarDelegate {
         return 0
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchAudious.count
-    }
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("searchCell") as! SearchCell
         let audio = searchAudious[indexPath.row]
@@ -98,23 +97,7 @@ class SearchAudiosViewController: AudiosViewController, UISearchBarDelegate {
         }
         return cell
     }
-    
-    //MARK: - UITableViewDelegate
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)  {
-        if player.playbleScreen != .Search {
-            player.playbleScreen = .Search
-            player.setPlayList(searchAudious)
-        }
-        if currentIndex == indexPath.row {
-            let playerVC = storyboard?.instantiateViewControllerWithIdentifier("playerVC")
-            presentViewController(playerVC!, animated: true, completion: nil)
-        } else {
-            currentIndex = indexPath.row
-            player.playAudioFromIndex(indexPath.row)
-        }
-    }
-    
+
     //MARK: - Actions
     
     private func addAudioFromRow(row: Int) {
