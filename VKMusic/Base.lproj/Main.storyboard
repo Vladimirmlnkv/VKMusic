@@ -42,10 +42,10 @@
             </objects>
             <point key="canvasLocation" x="1608" y="1939"/>
         </scene>
-        <!--My Audios View Controller-->
+        <!--All audios-->
         <scene sceneID="3L2-4q-5Dm">
             <objects>
-                <tableViewController id="pGm-M9-mAx" customClass="MyAudiosViewController" customModule="VKMusic" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="All audios" id="pGm-M9-mAx" customClass="MyAudiosViewController" customModule="VKMusic" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="YQs-xa-bBy">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -93,7 +93,7 @@
                             <outlet property="delegate" destination="pGm-M9-mAx" id="37Z-GA-TOb"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="J9v-za-Wyw">
+                    <navigationItem key="navigationItem" title="My Audios" id="J9v-za-Wyw">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="I22-bu-naQ">
                             <connections>
                                 <action selector="logoutAction:" destination="pGm-M9-mAx" id="bMI-KJ-89Z"/>
@@ -165,7 +165,7 @@
                             <outlet property="delegate" destination="dnq-ph-YJd" id="zUy-vR-OOX"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="Cox-UX-YVu">
+                    <navigationItem key="navigationItem" title="Search" id="Cox-UX-YVu">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="bD3-3n-eby">
                             <connections>
                                 <action selector="logoutAction:" destination="dnq-ph-YJd" id="j74-5Y-xhg"/>
@@ -368,7 +368,7 @@
                             <outlet property="delegate" destination="dcb-L4-Heu" id="4qI-Qm-zgR"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="6yX-sQ-xqd">
+                    <navigationItem key="navigationItem" title="Cache" id="6yX-sQ-xqd">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="zx7-Jd-4S9">
                             <connections>
                                 <action selector="logoutAction:" destination="dcb-L4-Heu" id="0dN-zf-jFa"/>
@@ -380,11 +380,11 @@
             </objects>
             <point key="canvasLocation" x="3908" y="3423"/>
         </scene>
-        <!--Item-->
+        <!--Navigation Controller-->
         <scene sceneID="Yku-7b-Hu5">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RfD-Bk-Ywm" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="tSo-wx-doX"/>
+                <navigationController wantsFullScreenLayout="YES" automaticallyAdjustsScrollViewInsets="NO" id="RfD-Bk-Ywm" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" systemItem="favorites" id="tSo-wx-doX"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="LEU-ve-JUT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -392,18 +392,18 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="pGm-M9-mAx" kind="relationship" relationship="rootViewController" id="bsL-ZB-Rmo"/>
+                        <segue destination="pGm-M9-mAx" kind="relationship" relationship="rootViewController" id="Z6t-iL-LyE"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ahw-lP-KK9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3120" y="1939"/>
+            <point key="canvasLocation" x="3096" y="1939"/>
         </scene>
-        <!--Item-->
+        <!--Navigation Controller-->
         <scene sceneID="EeC-gs-2j2">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="HSb-tC-45j" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="K7F-V4-w2t"/>
+                    <tabBarItem key="tabBarItem" selectedImage="search" systemItem="search" id="K7F-V4-w2t"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="UKW-OL-T6i">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -418,11 +418,11 @@
             </objects>
             <point key="canvasLocation" x="3104" y="2669"/>
         </scene>
-        <!--Item-->
+        <!--Navigation Controller-->
         <scene sceneID="d4p-nQ-uY6">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jBq-Pc-3JI" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="FQt-ud-uYU"/>
+                    <tabBarItem key="tabBarItem" selectedImage="cache" systemItem="downloads" id="FQt-ud-uYU"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zXJ-pQ-as5">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -458,8 +458,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="cache" width="52" height="52"/>
         <image name="pause" width="50" height="50"/>
         <image name="rewind-forward" width="50" height="50"/>
         <image name="rewing-back" width="50" height="50"/>
+        <image name="search" width="50" height="50"/>
     </resources>
 </document>
