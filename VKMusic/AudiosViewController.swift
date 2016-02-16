@@ -19,11 +19,16 @@ class AudiosViewController: UITableViewController {
     }
     
     let searchController = UISearchController(searchResultsController: nil)
-    var currentIndex = -1
+    var currentIndex = -1 {
+        willSet(newIndex) {
+            if newIndex != -1 {
+                tableView.selectRowAtIndexPath(NSIndexPath(forRow: newIndex, inSection: 0), animated: true, scrollPosition: .None)
+            }
+        }
+    }
     
     override func viewDidLoad() {
         generateSearchController()
-        
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("handleAudioPlayerWillChangePlaybleScreenNotification"), name: audioPlayerWillChangePlaybleScreenNotificationKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("handleAudioPlayerWillPlayNextSongNotification:"), name: audioPlayerWillPlayNextSongNotificationKey, object: nil)
@@ -47,6 +52,12 @@ class AudiosViewController: UITableViewController {
         tableView.tableHeaderView = searchController.searchBar
     }
     
+    func updatePlayerPlaylistIfNeeded() {
+        if player.playbleScreen == screenName {
+            player.setPlayList(audios)
+        }
+    }
+    
     //NARK: - Notifications
     
     @objc private func handleAudioPlayerWillChangePlaybleScreenNotification() {
@@ -62,7 +73,6 @@ class AudiosViewController: UITableViewController {
             let lastIndex = info["lastIndex"] as! Int
             currentIndex = index
             tableView.deselectRowAtIndexPath(NSIndexPath(forRow: lastIndex, inSection: 0), animated: true)
-            tableView.selectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true, scrollPosition: .None)
         }
     }
 
