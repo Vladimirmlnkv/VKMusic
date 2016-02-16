@@ -19,6 +19,8 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
         return allAudios
     }
     
+    private var isAudioDeleted = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,14 +40,9 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
     }
     
     private func updateCurrentIndex() {
-        if self.player.playbleScreen == self.screenName {
-            self.currentIndex = self.allAudios.indexOf(self.player.currentAudio)!
-        }
-    }
-    
-    private func updatePlayerPlaylistIfNeeded() {
         if player.playbleScreen == screenName {
-            player.setPlayList(audios)
+            tableView.deselectRowAtIndexPath(NSIndexPath(forRow: currentIndex, inSection: 0), animated: false)
+            currentIndex = allAudios.indexOf(player.currentAudio)!
         }
     }
     
@@ -105,8 +102,8 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
             self.tableView.beginUpdates()
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
             self.tableView.endUpdates()
-            self.updatePlayerPlaylistIfNeeded()
             self.updateCurrentIndex()
+            self.updatePlayerPlaylistIfNeeded()
         }
     }
     
@@ -151,6 +148,7 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
+            isAudioDeleted = true
             deleteAudioFromIndexPath(indexPath)
         }
     }
@@ -162,9 +160,10 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
     }
     
     override func setEditing(editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
-        if currentIndex != -1 {
+        if currentIndex != -1 && !isAudioDeleted {
             tableView.selectRowAtIndexPath(NSIndexPath(forRow: currentIndex, inSection: 0), animated: false, scrollPosition: .None)
+        } else if editing == true {
+            isAudioDeleted = false
         }
     }
 }
