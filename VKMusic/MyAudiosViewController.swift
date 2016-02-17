@@ -42,7 +42,11 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
     private func updateCurrentIndex() {
         if player.playbleScreen == screenName {
             tableView.deselectRowAtIndexPath(NSIndexPath(forRow: currentIndex, inSection: 0), animated: false)
-            currentIndex = allAudios.indexOf(player.currentAudio)!
+            if let audio = player.currentAudio {
+                currentIndex = allAudios.indexOf(audio)!
+            }else {
+                currentIndex = -1
+            }
         }
     }
     
@@ -90,7 +94,6 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
         RequestManager.sharedManager.deleteAudio(audio) {
             if self.player.currentAudio != nil && self.player.currentAudio == audio {
                 self.player.kill()
-                self.currentIndex = -1
             }
             if self.audios == self.filteredAudios {
                 let index = self.allAudios.indexOf(audio)!
@@ -166,4 +169,17 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
             isAudioDeleted = false
         }
     }
+    
+    //MARK: - Actions
+    
+    @IBAction func downloadButtonAction(sender: AnyObject) {
+        let button = sender as! UIButton
+        let cell = button.superview?.superview as? UITableViewCell
+        if let c = cell {
+            let row = tableView.indexPathForCell(c)!.row
+            let audio = audios[row]
+            DownloadManager.sharedManager.downloadAudio(audio)
+        }
+    }
+    
 }

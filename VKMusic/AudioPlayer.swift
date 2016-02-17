@@ -66,7 +66,6 @@ class AudioPlayer {
     //MARK: - Public API
     
     func playAudioFromIndex(index: Int) {
-        killTimeObserver()
         currentAudio = currentPlayList[index]
         let playerItem = AVPlayerItem(URL: NSURL(string: currentAudio.url)!)
         player = AVPlayer(playerItem: playerItem)
@@ -108,6 +107,7 @@ class AudioPlayer {
     
     func kill() {
         if player != nil {
+            killTimeObserver()
             player.replaceCurrentItemWithPlayerItem(nil)
             currentAudio = nil
         }
