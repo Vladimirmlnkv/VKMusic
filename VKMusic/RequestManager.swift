@@ -35,7 +35,8 @@ final class RequestManager {
         ]
         Alamofire.request(.GET, "https://api.vk.com/method/audio.get", parameters: parameters)
                  .responseJSON { response in
-                    if let serverData = response.result.value!["response"]! as? [AnyObject]{
+                    let dataDict = response.result.value as! [String : AnyObject]
+                    if let serverData = dataDict["response"] as? [AnyObject] {
                         let data = Array(serverData[1..<serverData.count])
                         success(serverData: data)
                     }
@@ -53,7 +54,8 @@ final class RequestManager {
         
         Alamofire.request(.GET, "https://api.vk.com/method/audio.search", parameters: parameters as? [String : AnyObject])
                  .responseJSON { response in
-                    if let serverData = response.result.value!["response"]! as? [AnyObject]{
+                    let dataDict = response.result.value as! [String : AnyObject]
+                    if let serverData = dataDict["response"]! as? [AnyObject]{
                         let data = Array(serverData[1..<serverData.count])
                         success(serverData: data)
                     }
@@ -66,7 +68,8 @@ final class RequestManager {
                             "access_token" : accessToken!.token]
         Alamofire.request(.GET, "https://api.vk.com/method/audio.add", parameters: parameters as? [String: AnyObject])
                 .responseJSON {response in
-                    let newID = response.result.value!["response"] as? Int
+                    let dataDict = response.result.value as! [String : AnyObject]
+                    let newID = dataDict["response"] as? Int
                     if let id = newID {
                         success(newID: id)
                     }
@@ -79,7 +82,8 @@ final class RequestManager {
                             "access_token" : accessToken!.token]
         Alamofire.request(.GET, "https://api.vk.com/method/audio.delete", parameters: parameters as? [String: AnyObject])
             .responseJSON { response in
-                if let resp = response.result.value!["response"] as? Int {
+                let dataDict = response.result.value as! [String : AnyObject]
+                if let resp = dataDict["response"] as? Int {
                     if resp == 1 {
                         success()
                     }
