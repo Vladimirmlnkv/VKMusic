@@ -1,82 +1,11 @@
 
 Podfile.lock
 
-Pods/Alamofire/LICENSE
-
-Pods/Alamofire/README.md
-
-Pods/Alamofire/Source/Alamofire.swift
-
-Pods/Alamofire/Source/Download.swift
-
-Pods/Alamofire/Source/Error.swift
-
-Pods/Alamofire/Source/Manager.swift
-
-Pods/Alamofire/Source/MultipartFormData.swift
-
-Pods/Alamofire/Source/ParameterEncoding.swift
-
-Pods/Alamofire/Source/Request.swift
-
-Pods/Alamofire/Source/Response.swift
-
-Pods/Alamofire/Source/ResponseSerialization.swift
-
-Pods/Alamofire/Source/Result.swift
-
-Pods/Alamofire/Source/ServerTrustPolicy.swift
-
-Pods/Alamofire/Source/Stream.swift
-
-Pods/Alamofire/Source/Upload.swift
-
-Pods/Alamofire/Source/Validation.swift
-
-Pods/Manifest.lock
-
-Pods/Pods.xcodeproj/project.pbxproj
-
-Pods/Pods.xcodeproj/xcuserdata/vladimirmelnikov.xcuserdatad/xcschemes/Alamofire.xcscheme
-
-Pods/Pods.xcodeproj/xcuserdata/vladimirmelnikov.xcuserdatad/xcschemes/Pods-VKMusic.xcscheme
-
-Pods/Pods.xcodeproj/xcuserdata/vladimirmelnikov.xcuserdatad/xcschemes/xcschememanagement.plist
-
-Pods/Target Support Files/Alamofire/Alamofire-dummy.m
-
-Pods/Target Support Files/Alamofire/Alamofire-prefix.pch
-
-Pods/Target Support Files/Alamofire/Alamofire-umbrella.h
-
-Pods/Target Support Files/Alamofire/Alamofire.modulemap
-
-Pods/Target Support Files/Alamofire/Alamofire.xcconfig
-
-Pods/Target Support Files/Alamofire/Info.plist
-
-Pods/Target Support Files/Pods-VKMusic/Info.plist
-
-Pods/Target Support Files/Pods-VKMusic/Pods-VKMusic-acknowledgements.markdown
-
-Pods/Target Support Files/Pods-VKMusic/Pods-VKMusic-acknowledgements.plist
-
-Pods/Target Support Files/Pods-VKMusic/Pods-VKMusic-dummy.m
-
-Pods/Target Support Files/Pods-VKMusic/Pods-VKMusic-frameworks.sh
-
-Pods/Target Support Files/Pods-VKMusic/Pods-VKMusic-resources.sh
-
-Pods/Target Support Files/Pods-VKMusic/Pods-VKMusic-umbrella.h
-
-Pods/Target Support Files/Pods-VKMusic/Pods-VKMusic.debug.xcconfig
-
-Pods/Target Support Files/Pods-VKMusic/Pods-VKMusic.modulemap
-
-Pods/Target Support Files/Pods-VKMusic/Pods-VKMusic.release.xcconfig
+Pods/
 
 VKMusic.xcworkspace/contents.xcworkspacedata
 
 VKMusic.xcworkspace/xcuserdata/vladimirmelnikov.xcuserdatad/UserInterfaceState.xcuserstate
 
 VKMusic.xcworkspace/xcuserdata/vladimirmelnikov.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+
