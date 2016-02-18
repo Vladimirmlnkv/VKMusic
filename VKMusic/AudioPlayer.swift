@@ -24,7 +24,7 @@ protocol AudioPlayerDelegate {
     func playerWillPlayNexAudio()
 }
 
-class AudioPlayer {
+class AudioPlayer{
     
     static let defaultPlayer = AudioPlayer()
     
@@ -66,6 +66,9 @@ class AudioPlayer {
     //MARK: - Public API
     
     func playAudioFromIndex(index: Int) {
+        if currentAudio != nil {
+            killTimeObserver()
+        }
         currentAudio = currentPlayList[index]
         let playerItem = AVPlayerItem(URL: NSURL(string: currentAudio.url)!)
         player = AVPlayer(playerItem: playerItem)
@@ -86,7 +89,7 @@ class AudioPlayer {
     }
     
     func next() {
-        if let currentIndex = currentPlayList.indexOf(currentAudio) {
+        if let currentIndex = currentPlayList.indexOf(currentAudio){
             if currentIndex + 1 <= currentPlayList.count - 1 {
                 playAudioFromIndex(currentIndex + 1)
                 let userInfo = ["index": currentIndex + 1, "lastIndex": currentIndex]
