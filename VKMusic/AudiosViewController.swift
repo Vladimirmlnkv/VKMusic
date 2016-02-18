@@ -58,11 +58,24 @@ class AudiosViewController: UITableViewController {
         }
     }
     
+    func setAccessoryType(cell: AudioCell) {
+        if player.currentAudio != nil && player.playbleScreen == screenName {
+            if cell.titleLabel.text == "\(player.currentAudio.artist) - \(player.currentAudio.title)" {
+                cell.accessoryType = .DisclosureIndicator
+            } else {
+                cell.accessoryType = .None
+            }
+        }
+    }
+    
     //NARK: - Notifications
     
     @objc private func handleAudioPlayerWillChangePlaybleScreenNotification() {
         if screenName != player.playbleScreen {
             currentIndex = -1
+        } else if currentIndex != -1 {
+            let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: currentIndex, inSection: 0))
+            cell!.accessoryType = .None
         }
     }
     
@@ -102,6 +115,13 @@ class AudiosViewController: UITableViewController {
         } else {
             currentIndex = indexPath.row
             player.playAudioFromIndex(indexPath.row)
+            let cell = tableView.cellForRowAtIndexPath(indexPath)
+            cell?.accessoryType = .DisclosureIndicator
         }
+    }
+    
+    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        cell?.accessoryType = .None
     }
 }

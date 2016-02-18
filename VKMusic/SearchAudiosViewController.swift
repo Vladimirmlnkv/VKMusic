@@ -89,6 +89,7 @@ class SearchAudiosViewController: AudiosViewController, UISearchBarDelegate {
         if indexPath.row >= searchAudious.count - 5 {
             searchForAudios()
         }
+        setAccessoryType(cell)
         return cell
     }
 

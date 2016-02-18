@@ -142,6 +142,7 @@ class MyAudiosViewController: AudiosViewController, UISearchResultsUpdating {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! AudioCell
         let audio = audios[indexPath.row]
         cell.updateLabels(title: audio.title, artist: audio.artist, duration: audio.duration)
+        setAccessoryType(cell)
         return cell
     }
     
