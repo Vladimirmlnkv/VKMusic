@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -59,27 +60,40 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qgN-GF-Vp8">
-                                            <rect key="frame" x="519" y="11" width="73" height="21"/>
+                                            <rect key="frame" x="477" y="11" width="73" height="21"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="73" id="U4E-Cc-7Rv"/>
+                                                <constraint firstAttribute="width" constant="73" id="Yvr-xF-tVM"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7J0-Rl-7RU">
-                                            <rect key="frame" x="8" y="11" width="503" height="21"/>
+                                            <rect key="frame" x="8" y="11" width="461" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b6p-HA-Pqi">
+                                            <rect key="frame" x="558" y="-2" width="34" height="34"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="34" id="yZK-py-ilE"/>
+                                            </constraints>
+                                            <state key="normal" title="Button" image="download"/>
+                                            <connections>
+                                                <action selector="downloadButtonAction:" destination="pGm-M9-mAx" eventType="touchUpInside" id="3qx-7f-yqt"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="7J0-Rl-7RU" firstAttribute="centerY" secondItem="cOc-8N-4Hi" secondAttribute="centerY" id="Jju-Z5-naB"/>
-                                        <constraint firstItem="qgN-GF-Vp8" firstAttribute="leading" secondItem="7J0-Rl-7RU" secondAttribute="trailing" constant="8" symbolic="YES" id="Kqc-wd-9f7"/>
-                                        <constraint firstItem="7J0-Rl-7RU" firstAttribute="leading" secondItem="cOc-8N-4Hi" secondAttribute="leadingMargin" id="Sr7-U6-X7q"/>
-                                        <constraint firstItem="qgN-GF-Vp8" firstAttribute="trailing" secondItem="cOc-8N-4Hi" secondAttribute="trailingMargin" id="mQy-MJ-RL2"/>
-                                        <constraint firstItem="qgN-GF-Vp8" firstAttribute="baseline" secondItem="7J0-Rl-7RU" secondAttribute="baseline" id="zLf-fl-Nmj"/>
+                                        <constraint firstItem="qgN-GF-Vp8" firstAttribute="leading" secondItem="7J0-Rl-7RU" secondAttribute="trailing" constant="8" symbolic="YES" id="JE1-Y0-ZEQ"/>
+                                        <constraint firstItem="7J0-Rl-7RU" firstAttribute="centerY" secondItem="cOc-8N-4Hi" secondAttribute="centerY" id="MJi-L0-wbF"/>
+                                        <constraint firstItem="qgN-GF-Vp8" firstAttribute="bottom" secondItem="b6p-HA-Pqi" secondAttribute="bottom" id="Srb-hn-qJs"/>
+                                        <constraint firstItem="b6p-HA-Pqi" firstAttribute="leading" secondItem="qgN-GF-Vp8" secondAttribute="trailing" constant="8" symbolic="YES" id="UNH-pX-XSM"/>
+                                        <constraint firstItem="b6p-HA-Pqi" firstAttribute="trailing" secondItem="cOc-8N-4Hi" secondAttribute="trailingMargin" id="bh9-o2-S0G"/>
+                                        <constraint firstItem="7J0-Rl-7RU" firstAttribute="leading" secondItem="cOc-8N-4Hi" secondAttribute="leadingMargin" id="jbS-O8-2P1"/>
+                                        <constraint firstItem="qgN-GF-Vp8" firstAttribute="baseline" secondItem="7J0-Rl-7RU" secondAttribute="firstBaseline" id="la8-1O-VUG"/>
+                                        <constraint firstItem="b6p-HA-Pqi" firstAttribute="top" secondItem="cOc-8N-4Hi" secondAttribute="topMargin" constant="-10" id="sme-Wg-MLz"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -93,7 +107,7 @@
                             <outlet property="delegate" destination="pGm-M9-mAx" id="37Z-GA-TOb"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="My Audios" id="J9v-za-Wyw">
+                    <navigationItem key="navigationItem" title="My Music" id="J9v-za-Wyw">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="I22-bu-naQ">
                             <connections>
                                 <action selector="logoutAction:" destination="pGm-M9-mAx" id="bMI-KJ-89Z"/>
@@ -459,6 +473,7 @@
     </scenes>
     <resources>
         <image name="cache" width="52" height="52"/>
+        <image name="download" width="50" height="50"/>
         <image name="pause" width="50" height="50"/>
         <image name="rewind-forward" width="50" height="50"/>
         <image name="rewing-back" width="50" height="50"/>

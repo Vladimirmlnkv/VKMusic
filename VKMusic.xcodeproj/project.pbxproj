@@ -15,6 +15,7 @@
 		7E5328DC1C5F583600D7E537 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5328DB1C5F583600D7E537 /* StartViewController.swift */; };
 		7E5328DE1C5F8FE100D7E537 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5328DD1C5F8FE100D7E537 /* LoginManager.swift */; };
 		7E535C481C74E70E003EDB4E /* SavedAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E535C471C74E70E003EDB4E /* SavedAudio.swift */; };
+		7E535C4B1C74EC06003EDB4E /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E535C4A1C74EC06003EDB4E /* DownloadManager.swift */; };
 		7E6E98DB1C6A2CF6008A805F /* MyAudiosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6E98DA1C6A2CF6008A805F /* MyAudiosViewController.swift */; };
 		7E6E98DD1C6A2D28008A805F /* SearchAudiosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6E98DC1C6A2D28008A805F /* SearchAudiosViewController.swift */; };
 		7E6E98DF1C6A2D3C008A805F /* CachedAudiousViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6E98DE1C6A2D3C008A805F /* CachedAudiousViewController.swift */; };
@@ -39,6 +40,7 @@
 		7E5328DB1C5F583600D7E537 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		7E5328DD1C5F8FE100D7E537 /* LoginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		7E535C471C74E70E003EDB4E /* SavedAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedAudio.swift; sourceTree = "<group>"; };
+		7E535C4A1C74EC06003EDB4E /* DownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		7E6E98DA1C6A2CF6008A805F /* MyAudiosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAudiosViewController.swift; sourceTree = "<group>"; };
 		7E6E98DC1C6A2D28008A805F /* SearchAudiosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchAudiosViewController.swift; sourceTree = "<group>"; };
 		7E6E98DE1C6A2D3C008A805F /* CachedAudiousViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedAudiousViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				7E5328DD1C5F8FE100D7E537 /* LoginManager.swift */,
 				7E6E98E01C6A2DBA008A805F /* AudioPlayer.swift */,
 				7E6E98E21C6A2E2E008A805F /* CommandCenter.swift */,
+				7E535C4A1C74EC06003EDB4E /* DownloadManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 				7EF102061C6E4D2C00859B1E /* PlayerViewController.swift in Sources */,
 				7EE8012B1C56270A003FD687 /* AppDelegate.swift in Sources */,
 				7E6E98DB1C6A2CF6008A805F /* MyAudiosViewController.swift in Sources */,
+				7E535C4B1C74EC06003EDB4E /* DownloadManager.swift in Sources */,
 				7E5328DE1C5F8FE100D7E537 /* LoginManager.swift in Sources */,
 				7E5328DC1C5F583600D7E537 /* StartViewController.swift in Sources */,
 				7E0464131C6C8DB500EA0D1C /* AudiosViewController.swift in Sources */,
