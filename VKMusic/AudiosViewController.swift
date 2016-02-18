@@ -71,11 +71,10 @@ class AudiosViewController: UITableViewController {
     //NARK: - Notifications
     
     @objc private func handleAudioPlayerWillChangePlaybleScreenNotification() {
-        if screenName != player.playbleScreen {
-            currentIndex = -1
-        } else if currentIndex != -1 {
+        if screenName == player.playbleScreen && currentIndex != -1 {
             let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: currentIndex, inSection: 0))
             cell!.accessoryType = .None
+            currentIndex = -1
         }
     }
     
