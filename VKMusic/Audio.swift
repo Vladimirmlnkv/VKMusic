@@ -29,4 +29,13 @@ struct Audio: Equatable {
         id = serverData["aid"] as! Int
         ownerID = serverData["owner_id"] as! Int
     }
+    
+    init(url: String, title: String, artist: String , duration: Int) {
+        self.url = url
+        self.title = title
+        self.artist = artist
+        self.duration = duration
+        id = 0
+        ownerID = 0
+    }
 }
