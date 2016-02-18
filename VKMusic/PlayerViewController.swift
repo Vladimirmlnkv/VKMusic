@@ -109,6 +109,7 @@ class PlayerViewController: UIViewController, AudioPlayerDelegate {
     
     @IBAction func remoteEnded(sender: AnyObject) {
         player.play()
+        updatePlayButton()
     }
     
 }
