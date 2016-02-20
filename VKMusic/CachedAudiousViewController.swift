@@ -35,8 +35,7 @@ class CachedAudiousViewController: AudiosViewController {
         var indexPaths = [NSIndexPath]()
         let realm = try! Realm()
         objects = realm.objects(SavedAudio)
-        let count = objects.count - savedAudios.count
-        for var i = savedAudios.count; i < count; i++ {
+        for var i = savedAudios.count; i < objects.count; i++ {
             let object = objects[i]
             savedAudios.append(Audio(url: object.url, title: object.title, artist: object.artist, duration: object.duration))
             indexPaths.append(NSIndexPath(forRow: i, inSection: 0))

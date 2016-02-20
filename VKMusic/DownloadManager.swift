@@ -38,7 +38,6 @@ class DownloadManager {
             let pathComponent = response.suggestedFilename
             let completeURL = directoryURL.URLByAppendingPathComponent(pathComponent!)
             self.createSavedAudio(audio, url: completeURL)
-            
             return completeURL
         }
     }
