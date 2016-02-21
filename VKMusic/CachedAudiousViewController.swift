@@ -19,7 +19,7 @@ class CachedAudiousViewController: AudiosViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getAudios()
+        updateAudios()
         addRefreshControl()
         screenName = .Cache
     }
@@ -30,6 +30,19 @@ class CachedAudiousViewController: AudiosViewController {
         refreshControl!.tintColor = UIColor.grayColor()
         refreshControl!.addTarget(self, action: Selector("updateAudios"), forControlEvents: .ValueChanged)
     }
+    
+    private func updateCurrentIndex() {
+        if player.playbleScreen == screenName {
+            tableView.deselectRowAtIndexPath(NSIndexPath(forRow: currentIndex, inSection: 0), animated: false)
+            if let audio = player.currentAudio {
+                currentIndex = savedAudios.indexOf(audio)!
+            }else {
+                currentIndex = -1
+            }
+        }
+    }
+
+    //MARK: - Realm
     
     @objc private func updateAudios() {
         var indexPaths = [NSIndexPath]()
@@ -46,29 +59,6 @@ class CachedAudiousViewController: AudiosViewController {
         self.refreshControl?.endRefreshing()
         updateCurrentIndex()
         updatePlayerPlaylistIfNeeded()
-    }
-    
-    private func updateCurrentIndex() {
-        if player.playbleScreen == screenName {
-            tableView.deselectRowAtIndexPath(NSIndexPath(forRow: currentIndex, inSection: 0), animated: false)
-            if let audio = player.currentAudio {
-                currentIndex = savedAudios.indexOf(audio)!
-            }else {
-                currentIndex = -1
-            }
-        }
-    }
-
-    //MARK: - Realm
-    
-    private func getAudios() {
-        let realm = try! Realm()
-        objects = realm.objects(SavedAudio)
-        let count = objects.count - savedAudios.count
-        for var i = savedAudios.count; i < count; i++ {
-            let object = objects[i]
-            savedAudios.append(Audio(url: object.url, title: object.title, artist: object.artist, duration: object.duration))
-        }
     }
     
     //MARK: - UITableViewDataSource
