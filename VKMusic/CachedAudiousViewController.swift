@@ -9,13 +9,18 @@
 import UIKit
 import RealmSwift
 
-class CachedAudiousViewController: AudiosViewController {
+class CachedAudiousViewController: AudiosViewController, UISearchResultsUpdating {
     
     private var objects = Results<SavedAudio>!()
     private var savedAudios = [Audio]()
+    private var filteredAudios = [Audio]()
     override var audios: [Audio] {
+        if searchController.active && searchController.searchBar.text != "" {
+            return filteredAudios
+        }
         return savedAudios
     }
+
     
     private var isAudioDeleted = false
     
@@ -53,12 +58,45 @@ class CachedAudiousViewController: AudiosViewController {
         if player.currentAudio != nil && player.currentAudio == audio {
             player.kill()
         }
-        savedAudios.removeAtIndex(indexPath.row)
+        if audios == filteredAudios {
+            let index = savedAudios.indexOf(audio)!
+            savedAudios.removeAtIndex(index)
+            filteredAudios.removeAtIndex(indexPath.row)
+        } else {
+            savedAudios.removeAtIndex(indexPath.row)
+        }
         tableView.beginUpdates()
         tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
         tableView.endUpdates()
         updateCurrentIndex()
         updatePlayerPlaylistIfNeeded()
+    }
+    
+    //MARK: - Search
+    
+    override func generateSearchController() {
+        super.generateSearchController()
+        searchController.searchResultsUpdater = self
+    }
+    
+    private func filterAudiosForSearchText(searchText: String) {
+        filteredAudios = savedAudios.filter{ audio in
+            let searchWords = searchText.componentsSeparatedByString(" ")
+            for word in searchWords {
+                if !(audio.title.lowercaseString.containsString(word.lowercaseString) || audio.artist.lowercaseString.containsString(word.lowercaseString)) && word != "" {
+                    return false
+                }
+            }
+            return true
+        }
+        tableView.reloadData()
+    }
+    
+    //MARK: - UISearchResultsUpdating
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        print("SEARCH")
+        filterAudiosForSearchText(searchController.searchBar.text!)
     }
 
     //MARK: - Realm
@@ -83,7 +121,7 @@ class CachedAudiousViewController: AudiosViewController {
     //MARK: - UITableViewDataSource
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return savedAudios.count
+        return audios.count
     }
     
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -92,7 +130,7 @@ class CachedAudiousViewController: AudiosViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! AudioCell
-        let audio = savedAudios[indexPath.row]
+        let audio = audios[indexPath.row]
         cell.updateLabels(title: audio.title, artist: audio.artist, duration: audio.duration)
         setAccessoryType(cell)
         return cell
