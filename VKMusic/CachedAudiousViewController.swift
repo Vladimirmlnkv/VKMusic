@@ -17,6 +17,8 @@ class CachedAudiousViewController: AudiosViewController {
         return savedAudios
     }
     
+    private var isAudioDeleted = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateAudios()
@@ -40,6 +42,23 @@ class CachedAudiousViewController: AudiosViewController {
                 currentIndex = -1
             }
         }
+    }
+    
+    private func deleteAudioFromIndexPath(indexPath: NSIndexPath) {
+        let realm = try! Realm()
+        try! realm.write({ () -> Void in
+            realm.delete(self.objects[indexPath.row])
+        })
+        let audio = audios[indexPath.row]
+        if player.currentAudio != nil && player.currentAudio == audio {
+            player.kill()
+        }
+        savedAudios.removeAtIndex(indexPath.row)
+        tableView.beginUpdates()
+        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
+        tableView.endUpdates()
+        updateCurrentIndex()
+        updatePlayerPlaylistIfNeeded()
     }
 
     //MARK: - Realm
@@ -67,6 +86,10 @@ class CachedAudiousViewController: AudiosViewController {
         return savedAudios.count
     }
     
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! AudioCell
         let audio = savedAudios[indexPath.row]
@@ -75,7 +98,24 @@ class CachedAudiousViewController: AudiosViewController {
         return cell
     }
     
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            isAudioDeleted = true
+            deleteAudioFromIndexPath(indexPath)
+        }
+    }
+    
+    //MARK: - UITableViewDelegate
+    
+    override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        return .Delete
+    }
+    
+    override func setEditing(editing: Bool, animated: Bool) {
+        if currentIndex != -1 && !isAudioDeleted {
+            tableView.selectRowAtIndexPath(NSIndexPath(forRow: currentIndex, inSection: 0), animated: false, scrollPosition: .None)
+        } else if editing == true {
+            isAudioDeleted = false
+        }
     }
 }
