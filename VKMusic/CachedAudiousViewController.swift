@@ -95,7 +95,6 @@ class CachedAudiousViewController: AudiosViewController, UISearchResultsUpdating
     //MARK: - UISearchResultsUpdating
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        print("SEARCH")
         filterAudiosForSearchText(searchController.searchBar.text!)
     }
 

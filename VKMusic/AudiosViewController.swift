@@ -73,7 +73,7 @@ class AudiosViewController: UITableViewController {
     @objc private func handleAudioPlayerWillChangePlaybleScreenNotification() {
         if screenName == player.playbleScreen && currentIndex != -1 {
             let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: currentIndex, inSection: 0))
-            cell!.accessoryType = .None
+            cell?.accessoryType = .None
             currentIndex = -1
         }
     }
